@@ -1,0 +1,50 @@
+<!-- <svg width="120" height="240" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="Gradient1">
+      <stop class="stop1" offset="0%" />
+      <stop class="stop2" offset="50%" />
+      <stop class="stop3" offset="100%" />
+    </linearGradient>
+    <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="red" />
+      <stop offset="50%" stop-color="black" stop-opacity="0" />
+      <stop offset="100%" stop-color="blue" />
+    </linearGradient>
+    <style>
+      <![CDATA[
+              #rect1 { fill: url(#Gradient1); }
+              .stop1 { stop-color: red; }
+              .stop2 { stop-color: black; stop-opacity: 0; }
+              .stop3 { stop-color: blue; }
+            ]]>
+    </style>
+  </defs>
+
+  <rect id="rect1" x="10" y="10" rx="15" ry="15" width="100" height="100" />
+  <rect
+    x="10"
+    y="120"
+    rx="15"
+    ry="15"
+    width="100"
+    height="100"
+    fill="url(#Gradient2)" />
+</svg> -->
+<!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" zoomAndPan="magnify" viewBox="0 0 37.5 37.499999" height="50" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="01ee916c76"><path d="M 3.75 16 L 31.5 16 L 31.5 37.007812 L 3.75 37.007812 Z M 3.75 16 " clip-rule="nonzero"/></clipPath></defs><path fill="#ffbd59" d="M 25.613281 8.011719 C 25.613281 3.601562 22.027344 0.0078125 17.625 0.0078125 C 13.222656 0.0078125 9.636719 3.601562 9.636719 8.011719 C 9.636719 12.414062 13.222656 16.003906 17.625 16.003906 C 22.027344 16.003906 25.613281 12.414062 25.613281 8.011719 Z M 25.613281 8.011719 " fill-opacity="1" fill-rule="nonzero"/><g clip-path="url(#01ee916c76)"><path fill="#ffbd59" d="M 3.75 30.839844 L 3.75 33.257812 C 3.75 35.59375 5.644531 37.492188 7.972656 37.492188 L 27.277344 37.492188 C 29.605469 37.492188 31.5 35.59375 31.5 33.257812 L 31.5 30.839844 C 31.5 23.175781 25.273438 16.9375 17.625 16.9375 C 9.976562 16.9375 3.75 23.175781 3.75 30.839844 Z M 3.75 30.839844 " fill-opacity="1" fill-rule="nonzero"/></g></svg>  -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" zoomAndPan="magnify" viewBox="0 0 37.5 37.499999" height="50" preserveAspectRatio="xMidYMid meet" version="1.0">
+  <defs>
+    <clipPath id="01ee916c76">
+      <path d="M 3.75 16 L 31.5 16 L 31.5 37.007812 L 3.75 37.007812 Z M 3.75 16 " clip-rule="nonzero"/>
+    </clipPath>
+    <!-- Define the linear gradient -->
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4158d0"/>
+      <stop offset="46%" stop-color="#c850c0"/>
+      <stop offset="100%" stop-color="#ffcc70"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#gradient)" d="M 25.613281 8.011719 C 25.613281 3.601562 22.027344 0.0078125 17.625 0.0078125 C 13.222656 0.0078125 9.636719 3.601562 9.636719 8.011719 C 9.636719 12.414062 13.222656 16.003906 17.625 16.003906 C 22.027344 16.003906 25.613281 12.414062 25.613281 8.011719 Z M 25.613281 8.011719 " fill-opacity="1" fill-rule="nonzero"/>
+  <g clip-path="url(#01ee916c76)">
+    <path fill="url(#gradient)" d="M 3.75 30.839844 L 3.75 33.257812 C 3.75 35.59375 5.644531 37.492188 7.972656 37.492188 L 27.277344 37.492188 C 29.605469 37.492188 31.5 35.59375 31.5 33.257812 L 31.5 30.839844 C 31.5 23.175781 25.273438 16.9375 17.625 16.9375 C 9.976562 16.9375 3.75 23.175781 3.75 30.839844 Z M 3.75 30.839844 " fill-opacity="1" fill-rule="nonzero"/>
+  </g>
+</svg>
