@@ -14,6 +14,8 @@ import { getListGenre } from "../SliceApi/SliceApi";
 import { statusType } from "../SliceApi/SliceApi";
 import { PopularStatus } from "../SliceApi/SliceApi";
 import { PopularMovies } from "../SliceApi/SliceApi";
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
 import { genreSelector } from "../SliceApi/SliceApi";
 import { getPopularMovie } from "../SliceApi/SliceApi";
 import { ImageSlider } from "../ImageSlider/ImageSlider";
@@ -128,12 +130,16 @@ export const Layout = () => {
         {createPortal(<Outlet />, document.getElementById("root"))}
 
         <Navbar movies={movies} q={q} />
-        <div className=" h-[600px] border-zinc-50 border-8 mx-20 ">
+  
+        <div className=" h-[600px] mx-20 ">
           <ImageSlider />
-        </div>
-
-        <div className=" h-[600px] border-zinc-50 border-8 mx-20 ">
-          <SlideMovive />
+          </div>
+  
+    
+        <div className=" h-[600px] mx-20 ">
+              
+        
+       <SlideMovive />
         </div>
 
         {/* <CateogySelect

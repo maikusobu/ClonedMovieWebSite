@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { PopularStatus } from "../SliceApi/SliceApi";
 import { AnimatePresence } from "framer-motion";
 import { IconContext } from "react-icons";
-import { CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { motion } from "framer-motion";
 import "./ImageSlider.css";
@@ -62,9 +62,30 @@ export function ImageSlider({}) {
     return (
       <div className=" px-10 pt-10  flex ">
         <motion.div className="slideShow  w-1/3 relative" data-index={index}>
-          <div className="absolute top-0 left-0 translate-x-[50%] translate-y-[-50%]rounded-full">
-            <div className="w-[40px] h-[40px] bg-black rounded-full">
-          <CircularProgressbar value={PopularMoviesDB.results[index].vote_average*10} text={`${PopularMoviesDB.results[index].vote_average*10}%`} />;
+          <div className="absolute top-0 right-10 translate-x-[50%] translate-y-[-50%]rounded-full">
+            <div className="w-[40px] h-[40px] bg-black rounded-full ">
+          <CircularProgressbar value={PopularMoviesDB.results[index].vote_average*10} 
+          text={`${PopularMoviesDB.results[index].vote_average}`}
+          strokeWidth={12}
+          styles={{
+            root: {},
+            path: {
+              stroke: ' #dc2430',
+              strokeLinecap: 'butt',
+              transition: 'stroke-dashoffset 0.5s ease 0s',
+            },
+            trail: {
+              stroke: '#d6d6d6',
+            },
+            text: {
+              fill: ' #FCD354',
+              fontSize: '40px',
+              fontWeight: "500",
+            },
+            backgroundColor: "#301816"
+          }}
+
+         />;
           </div>
           </div>
           <img
@@ -90,14 +111,16 @@ export function ImageSlider({}) {
         <div className="w-2/3">
           <figure>
             <figcaption>
-              <h1 className="text-amber-500 text-5xl font-bold">
+              <h1 className="text-[#FCD354] text-5xl font-bold">
                 {/* {PopularMoviesDB.results[index].title.length < 30
                   ? PopularMoviesDB.results[index].title
                   : PopularMoviesDB.results[index].title.substring(0, 10)} */}
                   {PopularMoviesDB.results[index].title}
               </h1>
             </figcaption>
-            <p className=" pt-4 max-w-prose text-lg font-light text-neutral-50">
+            <p className=" pt-4 max-w-prose text-lg font-light text-neutral-50 
+  first-letter:text-5xl first-letter:font-bold first-letter:text-[#dc2430]
+  first-letter:mr-3 first-letter:float-left">
               {PopularMoviesDB.results[index].overview}
             </p>
             <div className="flex pt-4 pb-4 gap-4">
@@ -107,7 +130,7 @@ export function ImageSlider({}) {
               <div>
                
                 <IconContext.Provider
-                  value={{ className: "", size: "3em", color: "white" }}
+                  value={{ className: "", size: "3em", color: "#FCD354" }}
                 >
                   <FaPlayCircle />
                 </IconContext.Provider>
@@ -116,7 +139,7 @@ export function ImageSlider({}) {
   
               </div>
             </div>
-            <div className=" text-amber-500">{`${dataDate[2]}  ${dataDate[1]}  ${dataDate[3]}`}</div>
+            <div className=" text-white">{`${dataDate[2]}  ${dataDate[1]}  ${dataDate[3]}`}</div>
           </figure>
         </div>
       </div>

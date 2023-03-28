@@ -6,8 +6,11 @@ import { Link } from "react-router-dom";
 import { getTrendingMovie } from "../SliceApi/SliceApiTrending";
 import { useDispatch } from "react-redux";
 import { memo } from "react";
-import ReactLoading from "react-loading";
-import { loader } from "../Layout/Layout";
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
+
+import './style.css';
+
 const dummy = [1,2,3,4,5,6,7,8,9,10];
 export const ListSlidingMovie = memo(function ListSlidingMovie({ toggle }) {
   const dispatch = useDispatch();
@@ -42,8 +45,12 @@ export const ListSlidingMovie = memo(function ListSlidingMovie({ toggle }) {
    </div>
     );
   } else if (status == "success") {
+  
     return (
-      <div className=" h-2/3 flex flex-nowrap overflow-x-scroll gap-10 px-10  ">
+        
+         <div className=" data-simplebar h-2/3 flex flex-nowrap overflow-x-scroll 
+      gap-10 p-10 overflow-y-hidden border-3 border-white border  rounded-xl">
+       
         {data[0].results.map((movie) => {
           return (
             <div key={movie.title} className="grow-0 shrink-0 basis-200 ">
@@ -51,19 +58,26 @@ export const ListSlidingMovie = memo(function ListSlidingMovie({ toggle }) {
               <Link className={""}>
                 <img
                   loading="lazy"
-                  className=""
+                  className="rounded-lg"
                   onLoad={() => setLoad(false)}
                   src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
                   width="200"
                   height="300"
                 />
               </Link>
+              <div> 
+                  <h1>
+                  {movie.title}
+                  </h1>
+              </div>
             </div>
           );
         })}
- 
+
       </div>
-   
+    
     );
+   
+   
   }
 });

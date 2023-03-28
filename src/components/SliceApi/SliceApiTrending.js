@@ -16,6 +16,15 @@ const initialState = {
   status: "idle",
   error: "",
 };
+export const delayFulfilledMiddleware = (store) => (next) => (action) => {
+  if (action.type === getTrendingMovie.fulfilled.toString()) {
+    setTimeout(() => {
+      next(action);
+    }, 2000);
+  } else {
+    next(action);
+  }
+};
 const trendSlice = createSlice({
   name: "trend",
   initialState,

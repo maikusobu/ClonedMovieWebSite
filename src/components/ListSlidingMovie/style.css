@@ -1,0 +1,7 @@
+.simplebar-scrollbar::before {
+    background-color: #000;
+}
+
+.simplebar-track.simplebar-vertical {
+    width: 10px;
+}

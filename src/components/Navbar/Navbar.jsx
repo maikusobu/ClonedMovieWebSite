@@ -2,7 +2,10 @@ import { FaUserAlt } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { IconContext } from "react-icons";
 import { FaPlay } from "react-icons/fa";
-import Logo from "./logo2.svg";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
+import Logo from "./user1.svg";
 import User from "./user.svg"
 import { Form } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -11,12 +14,14 @@ import { useLoaderData } from "react-router-dom";
 import { FaFontAwesome } from "react-icons/fa";
 import { useEffect, useRef } from "react";
 import { useSubmit } from "react-router-dom";
+import { useNavigation } from "react-router-dom";
 import "./Navbar.css";
 import Loading from "react-loading";
+import { Navigation } from "swiper";
 export const Navbar = ({ movies, q }) => {
   const inputRef = useRef();
   const submit = useSubmit();
-
+  const naigation = useNavigation();
   useEffect(() => {
     inputRef.current.value = q;
   }, [q]);
@@ -25,18 +30,18 @@ export const Navbar = ({ movies, q }) => {
     <>
       <nav
         id="navBar"
-        className=" w-full flex  justify-between items-center  my-7 px-8 h-20 bg mb-5 border border-6 border-white "
+        className=" w-full flex  justify-between items-center  my-7 px-8 h-20 bg  "
       >
-        <div className="  h-full flex items-center overflow-hidden border border-4 border-white">
+        <div className="  h-full flex items-center ">
           <div className=" ">
-<div className="flex  justify-center items-center">
- <div className=" text-[70px] border-white border fagradient">I</div>
+<div className="flex  justify-between items-center">
+ <div className=" fagradient font-medium text-6xl flex items-center mb-2">I</div>
  <div>
- <div className="border-10 border-white border aspect-square  ">
+ <div className="border-10 aspect-square  ">
   <img src={Logo}/>
  </div>
   </div>
- <div className=" text-[50px] font-extrabold fagradient">W</div>
+ <div className=" text-6xl  font-medium flex items-center fagradient mb-2 ml-[-0.1em]">W</div>
 </div>
           </div>
         </div>
@@ -62,13 +67,13 @@ export const Navbar = ({ movies, q }) => {
                 type="search"
                 className="relative w-full rounded-full border 
               border-solid border-neutral-700 bg-white
-              
               bg-clip-padding pl-3 pr-10 py-1.5 text-base font-normal 
-              text-red-500 outline-none transition duration-300 
-              ease-in-out focus:border-primary-600 focus:text-black-700 
+               outline-none transition duration-300 
+              placeholder:text-red-300
+              ease-in-out focus:border-primary-600 focus:text-black 
               focus:shadow-te-primary focus:outline-none dark:border-neutral-600 
-              dark:text-red-200 dark:placeholder:text-red-200 "
-                placeholder="search the"
+              dark:text-red-200"
+                placeholder="Movie you love"
                 aria-label="Search-movie"
                 aria-describedby="button-addon2"
                 name="search"
@@ -80,16 +85,11 @@ export const Navbar = ({ movies, q }) => {
                   });
                 }}
               />
-              <IconContext.Provider
-                value={{
-                  className:
-                    " absolute top-0 right-0 translate-y-1/2 translate-x-[-50%]",
-                  size: "1.2em",
-                  color: "red",
-                }}
-              >
-                <FaSearch />
-              </IconContext.Provider>
+              
+            <div className=" transition ease-in-out  absolute top-0 right-0 translate-y-[30%] translate-x-[-50%] cursor-pointer">
+              {naigation.state == "idle" ? <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" /> : 
+            <FontAwesomeIcon icon={faSpinner} spinPulse size="xl"/>}
+            </div>
             </div>
           </Form>
         </div>
