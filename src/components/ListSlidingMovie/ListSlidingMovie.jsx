@@ -7,6 +7,7 @@ import { getTrendingMovie } from "../SliceApi/SliceApiTrending";
 import { useDispatch } from "react-redux";
 import { memo } from "react";
 import SimpleBar from 'simplebar-react';
+import { useReleaseDay } from "../../useReleaseDay/useReleaseDay";
 import 'simplebar-react/dist/simplebar.min.css';
 
 import './style.css';
@@ -21,14 +22,15 @@ export const ListSlidingMovie = memo(function ListSlidingMovie({ toggle }) {
     const time = toggleStateData ? "day" : "week";
     dispatch(getTrendingMovie(time));
   }, [toggleStateData]);
-
-  const [load, setLoad] = useState(true);
-  if (status == "pending") {
+  if (status == "pending" ) {
     return (
-      <div className=" h-2/3  flex animate-pulse flex-nowrap overflow-x-scroll gap-10 px-10  ">
+     
+         <div id="list_content" className="  h-3/4 flex flex-nowrap overflow-x-scroll 
+      gap-10 p-10 overflow-y-hidden  border-[rgb(133,_137,_148)] border border-[10px] rounded-[10px]">
       {dummy.map(dummy =>  
-      <div className=" listMovie border border-blue-300   bg-slate-700 shadow rounded-md p-4 shrink-0 grow-0 ">
-      <div className="animate-pulse  bg-slate-700  ">
+      <div className="  grow-0 shrink-0 basis-200 ">
+          <div className="animate-pulse  bg-slate-700  rounded-lg w-[200px] h-[300px] mb-2 ">
+           
         {/* <div className=" bg-slate-700 listMovie"></div> */}
         {/* <div className="flex-1 space-y-6 py-1">
           <div className="h-2 bg-slate-700 rounded"></div>
@@ -40,7 +42,14 @@ export const ListSlidingMovie = memo(function ListSlidingMovie({ toggle }) {
             <div className="h-2 bg-slate-700 rounded"></div>
           </div>
         </div> */}
-      </div>
+          </div>
+           <div className="w-[200px] h-[50px] ">
+             <h1 className="w-full animate-pulse  bg-slate-700  h-1/2 mb-2 "></h1>
+              <div className="w-full animate-pulse  bg-slate-700 h-1/2 ">
+                <div></div>
+                <div></div>
+              </div>
+            </div>
     </div>)}
    </div>
     );
@@ -48,9 +57,9 @@ export const ListSlidingMovie = memo(function ListSlidingMovie({ toggle }) {
   
     return (
         
-         <div className=" data-simplebar h-2/3 flex flex-nowrap overflow-x-scroll 
-      gap-10 p-10 overflow-y-hidden border-3 border-white border  rounded-xl">
-       
+         <div id="list_content" className="  h-3/4 flex flex-nowrap overflow-x-scroll 
+      gap-10 p-10 overflow-y-hidden  border-[rgb(133,_137,_148)] border border-[10px] rounded-[10px]">
+      
         {data[0].results.map((movie) => {
           return (
             <div key={movie.title} className="grow-0 shrink-0 basis-200 ">
@@ -65,10 +74,19 @@ export const ListSlidingMovie = memo(function ListSlidingMovie({ toggle }) {
                   height="300"
                 />
               </Link>
-              <div> 
+              <div className=" max-sm-prose  w-[200px] text-white"> 
                   <h1>
                   {movie.title}
-                  </h1>
+                </h1>
+                <div className="flex gap-5">
+                  <div>
+                    {Math.round(movie.vote_average)}
+                  </div>
+                  <div className="text-white">
+                 {`${useReleaseDay(movie)[2]} ${useReleaseDay(movie)[1]} ${useReleaseDay(movie)[3]}`}
+                    </div>
+
+                  </div>
               </div>
             </div>
           );

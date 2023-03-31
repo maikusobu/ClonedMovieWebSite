@@ -27,20 +27,24 @@ export function SlideMovive() {
           dispatch(toggleTrending(!toggleStateData));
         }}
       >
-        <div className="flex bg-red-500 rounded-full  ">
+        <div className="flex bg-gray-500 rounded-full  ">
           <div
             className={
-              "p-2 " + (toggleStateData ? "bg-green-500 rounded-full " : "")
+              "p-2 " + (toggleStateData ? "bg-[#1D1E21] rounded-full " : "")
             }
-          >
-            TODAY
+            >
+            <div className={toggleStateData ? "fagradient" : "text-[#1D1E21]"}>
+                TODAY
+                </div>
           </div>
           <div
             className={
-              "p-2 " + (!toggleStateData ? "bg-green-500 rounded-full " : "")
+              "p-2 " + (!toggleStateData ? "bg-[#1D1E21] rounded-full " : "")
             }
           >
-            THIS WEEK
+           <div className={!toggleStateData ? "fagradient" : "text-[#1D1E21]"}>
+               THIS WEEK
+                </div>
           </div>
         </div>
       </button>

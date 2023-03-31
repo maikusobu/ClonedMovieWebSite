@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import "./ImageSlider.css";
 import { FaPlayCircle } from "react-icons/fa";
 import { toDate } from 'date-fns'
+import { useReleaseDay } from "../../useReleaseDay/useReleaseDay";
 
 export function ImageSlider({}) {
   const variants = {
@@ -50,13 +51,12 @@ export function ImageSlider({}) {
       clearInterval(imgSlide.current);
     };
   });
+ 
   if (PopularStatusDB == "success") {
-  dataDate = [...toDate(new Date(PopularMoviesDB?.results[index].release_date.split("-")[0],PopularMoviesDB?.results[index].release_date.split("-")[1],PopularMoviesDB?.results[index].release_date.split("-")[2])).toString().split(" ")]
-  
-
-  
-}
-
+    const movie = PopularMoviesDB?.results[index];
+    console.log(movie)
+    dataDate = [...useReleaseDay(movie)];
+  }
   if (PopularStatusDB == "pending") return <h1>Loading...</h1>;
   else if (PopularStatusDB == "success")
     return (
