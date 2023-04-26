@@ -1,7 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-* {
+
+@layer base {
+  :root {
+    --my-color: #336600;
+  }
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 body {
@@ -12,27 +21,82 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  width: 100%;
 }
 
 #root {
   height: 100vh;
   width: 100%;
 }
-/*
- * react-circular-progressbar styles
- * All of the styles in this file are configurable!
- */
+.media_text_heading {
+  font-size: calc(1rem + 1.5vw);
+}
+p {
+  font-size: max(1.2rem, 1.2vw);
+}
+.container {
+  height: 300px;
+  width: 500px;
+  overflow: hidden;
+}
+/* details[open] summary > span > svg {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease-in-out;
+} */
+.blob {
+  height: 50%;
+  aspect-ratio: 1;
+  position: absolute;
+  left: 40%;
+  top: 10%;
+  z-index: -10;
+  filter: blur(100px);
+  border-radius: 50%;
+  background: #7b4397; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #dc2430,
+    #7b4397
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #dc2430,
+    #7b4397
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
- .CircularProgressbar {
-  /*
-   * This fixes an issue where the CircularProgressbar svg has
-   * 0 width inside a "display: flex" container, and thus not visible.
-   */
+  animation: rotate 8s infinite;
+  animation-timing-function: ease-in;
+}
+@keyframes rotate {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
+.blur {
+  position: absolute;
+  height: 100%;
   width: 100%;
-  /*
-   * This fixes a centering issue with CircularProgressbarWithChildren:
-   * https://github.com/kevinsqi/react-circular-progressbar/issues/94
-   */
+  backdrop-filter: blur(200px);
+  z-index: -1;
+}
+.backdrop {
+  position: absolute;
+  z-index: -50;
+  height: 100%;
+  width: 100%;
+}
+.simplebar-scrollbar {
+  background-color: red;
+  border: 1px solid white;
+}
+
+.CircularProgressbar {
+  width: 100%;
+
   vertical-align: middle;
 }
 
@@ -58,17 +122,12 @@ body {
 .CircularProgressbar .CircularProgressbar-background {
   fill: #d6d6d6;
 }
+.chose_select {
+  display: none;
+}
 
-/*
- * Sample background styles. Use these with e.g.:
- *
- *   <CircularProgressbar
- *     className="CircularProgressbar-inverted"
- *     background
- *     percentage={50}
- *   />
- */
-.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-background {
+.CircularProgressbar.CircularProgressbar-inverted
+  .CircularProgressbar-background {
   fill: #3e98c7;
 }
 
@@ -112,11 +171,261 @@ input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
 .listMovie {
-  height:300px;
+  height: 300px;
   width: 200px;
+}
+.text_date_mobile {
+  display: none;
 }
 .image {
-  height:300px;
+  height: 300px;
   width: 200px;
 }
+.icon_mobile {
+  display: none;
+}
+#list_content {
+  --color-red: #dc2430;
+  --color-yellow: #fcd354;
+  --color-black: #1d1e21;
+}
 
+#list_content {
+  border-bottom: none;
+}
+
+#list_content::-webkit-scrollbar {
+  height: 10px;
+  border-radius: 10px;
+}
+
+/* Track */
+#list_content::-webkit-scrollbar-track {
+  background-clip: content-box;
+  background: rgb(133, 137, 148);
+}
+
+#list_content::-webkit-scrollbar-thumb {
+  background: -webkit-linear-gradient(
+    to right,
+    #dc2430,
+    #7b4397
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #dc2430, #7b4397);
+  border-radius: 15px;
+  width: 10%;
+  transition: all 10s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+#list_content::-webkit-scrollbar-thumb:hover {
+  background: -webkit-linear-gradient(
+    to right,
+    #dc2430 0,
+    #7b4397 40%
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #dc2430 0, #7b4397 40%);
+}
+#list_content.trailer {
+  border-bottom: rgb(133, 137, 148);
+}
+.circle-spin {
+  transform: translateX(50%);
+  filter: blur(60px);
+  animation: rotate infinite linear;
+}
+@media screen and (max-width: 900px) {
+  .media_image_container {
+    margin: 0 0;
+  }
+  .media_paragraph_container {
+    width: 66.667%;
+  }
+  .media_width {
+    /* flex-direction: column; */
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 0;
+    gap: 2rem;
+  }
+  .media_circle_progress {
+    width: 30px;
+    height: 30px;
+  }
+  .media_dot {
+    display: none;
+  }
+
+  .media_image_container {
+    height: 400px;
+    margin-bottom: 10px;
+  }
+  .media_arrow {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+  }
+}
+@media screen and (max-width: 590px) {
+  .image_responsive {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .media_search_bar {
+    width: 0%;
+  }
+  .text_mobile_logo {
+    /* font-size: calc(); */
+  }
+  .media_width {
+  }
+  .media_arrow {
+  }
+  .media_text_paragraph {
+    display: none;
+  }
+  .slideShow {
+    width: 50%;
+  }
+  .media_text_paragraph_mobile {
+    width: 100%;
+
+    display: block;
+  }
+  .chose_button {
+    display: none;
+  }
+  .chose_select {
+    display: block;
+  }
+  .text_date {
+    display: none;
+  }
+  .icon_play {
+    display: none;
+  }
+  .text_date_mobile {
+    display: block;
+  }
+  .icon_mobile {
+    padding-top: 0.5rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+}
+.disable {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+@media screen and (max-width: 420px) {
+  .media_mobile_container_button {
+    flex-direction: column;
+    gap: 1.8rem;
+  }
+  /* .text_mobile_logo {
+    font-size: 2.7rem;
+  } */
+  .media_heading_mobile {
+    font-size: 1rem;
+  }
+  .trailer_mobile {
+    margin-top: 2rem;
+  }
+}
+@media screen and (max-width: 420px) {
+  .blob {
+    width: 30%;
+  }
+  .media_search {
+    display: none;
+  }
+  .media_width {
+    flex-direction: column;
+  }
+  .media_img_width {
+  }
+  .slideShow {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .media_image_container {
+    height: 800px;
+  }
+  .media_paragraph_container {
+    width: 100%;
+  }
+  .media_text_heading {
+    font-size: calc(2rem + 1.1vw);
+  }
+  #navBar {
+    padding: 0;
+    justify-content: space-between;
+  }
+  .media_heading_mobile::before {
+    display: none !important;
+  }
+
+  .media_heading_mobile_container {
+    text-align: center;
+    width: 100%;
+    background-color: #fcd354;
+  }
+  #root {
+    overflow-x: hidden;
+  }
+  .main_navbar {
+    display: block !important;
+  }
+}
+@keyframes rotateAndDisappear {
+  0% {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: rotate(15deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: rotate(30deg);
+    opacity: 0;
+  }
+}
+@keyframes widthSpanning {
+  0% {
+    width: 0%;
+    height: 0%;
+  }
+  100% {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+@keyframes closingSpanning {
+  0% {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  100% {
+    display: none;
+    width: 0%;
+    height: 0%;
+  }
+}
+.navBar_mobile {
+  animation: rotateAndDisappear 0.1s linear forwards;
+}
+.animated-nav {
+  animation: widthSpanning 0.5s linear 0.1s forwards;
+}
+.animated-closed {
+  animation: closingSpanning 0.5 linear 0.1s forwards;
+}
+.main_navbar {
+  display: none;
+}

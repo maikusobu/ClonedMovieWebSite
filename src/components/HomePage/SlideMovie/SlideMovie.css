@@ -1,0 +1,45 @@
+:root {
+  --select-border: #777;
+  --select-focus: blue;
+  --select-arrow: var(--select-border);
+}
+.height {
+  height: 600px;
+}
+.fagradient {
+  background: #7b4397; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #dc2430,
+    #7b4397
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #dc2430,
+    #7b4397
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.chose_select {
+  border-radius: 20%;
+  background-color: #1d1e21;
+  color: #fcd354;
+  font-weight: 500;
+  border: none;
+}
+select:focus {
+  outline: none;
+  border-color: #dc2430;
+  box-shadow: 0 0 0 2px #dc2430;
+}
+select {
+  --tw-shadow: 0 0 red;
+}
+
+option:checked {
+  color: rgb(246, 250, 0);
+  background-color: rgb(5, 26, 1);
+}

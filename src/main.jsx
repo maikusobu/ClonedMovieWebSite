@@ -3,14 +3,17 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
-import { ListMovie } from "./components/ListMovie/ListMovie";
-import { Layout } from "./components/Layout/Layout";
+import MovieDescription from "./components/MovieDetail/MovieDescription";
+import SearchFilterContainer from "./components/SearchFilter/SearchFilterContainer";
+import { Layout } from "./components/HomePage/Layout/Layout";
 import { Provider } from "react-redux";
 import { store } from "./App/store";
-import { Navbar } from "./components/Navbar/Navbar";
-import { loader as NavbarLoader } from "./components/Layout/Layout";
-import { VideoPlay } from "./components/VideoPlay/VideoPlay";
-import { loader as VideoLoader } from "./components/VideoPlay/VideoPlay";
+import { loader as MovieDescriptionLoader } from "./components/MovieDetail/MovieDescription";
+import { loader as NavbarLoader } from "./components/HomePage/Layout/Layout";
+import { VideoPlay } from "./components/HomePage/VideoPlay/VideoPlay";
+import { loader as VideoLoader } from "./components/HomePage/VideoPlay/VideoPlay";
+import { Navbar } from "./components/HomePage/Navbar/Navbar";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,6 +26,15 @@ const router = createBrowserRouter([
         loader: VideoLoader,
       },
     ],
+  },
+  {
+    path: "/description/movie/:movieID",
+    element: <MovieDescription />,
+    loader: MovieDescriptionLoader,
+  },
+  {
+    path: "/nowplaying/search",
+    element: <SearchFilterContainer />,
   },
 ]);
 

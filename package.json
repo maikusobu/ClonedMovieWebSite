@@ -3,10 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+    "proxy": "http://localhost:3000",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
@@ -17,10 +19,13 @@
     "@reduxjs/toolkit": "^1.9.3",
     "babel-plugin-macros": "^3.1.0",
     "classnames": "^2.3.2",
+    "color-thief-react": "^2.1.0",
     "date-fns": "^2.29.3",
+    "extract-colors": "^3.0.0",
     "framer-motion": "^10.0.1",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
+    "node-vibrant": "^3.2.1-alpha.1",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
@@ -29,11 +34,13 @@
     "react-modal": "^3.16.1",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.2",
+    "react-select": "^5.7.2",
     "simplebar-react": "^3.2.2",
     "sort-by": "^0.0.2",
     "swiper": "^9.1.0"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
@@ -45,4 +52,5 @@
     "tailwindcss": "^3.2.7",
     "vite": "^4.1.0"
   }
+
 }

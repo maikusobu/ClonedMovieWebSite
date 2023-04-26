@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" zoomAndPan="magnify" viewBox="0 0 37.5 37.499999" height="40" preserveAspectRatio="xMidYMid meet" version="1.0">
+<defs>
+<clipPath id="be0811d3a9">
+<path d="M 1.347656 23 L 18 23 L 18 33.75 L 1.347656 33.75 Z M 1.347656 23 " clip-rule="nonzero"/></clipPath>
+</defs>
+ <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#dc2430 "/>
+     
+      <stop offset="75" stop-color="#7b4397"/>
+    </linearGradient>
+<path fill="url(#gradient)" d="M 7.445312 0 L 11.660156 0 L 11.660156 31.445312 L 7.445312 31.445312 Z M 7.445312 0 " fill-opacity="1" fill-rule="evenodd"/>
+<g clip-path="url(#be0811d3a9)">
+<path fill="url(#gradient)"  d="M 9.554688 28.480469 L 4.722656 23.671875 L 1.746094 26.636719 L 8.0625 32.925781 C 8.886719 33.746094 10.21875 33.746094 11.042969 32.925781 L 17.363281 26.636719 L 14.382812 23.671875 Z M 9.554688 28.480469 " fill-opacity="1" fill-rule="evenodd"/>
+</g>
+<path fill="url(#gradient)"  d="M 15.875 16.769531 L 24.300781 16.769531 L 24.300781 20.960938 L 15.875 20.960938 Z M 15.875 16.769531 " fill-opacity="1" fill-rule="evenodd"/>
+<path fill="url(#gradient)"  d="M 15.875 8.386719 L 30.617188 8.386719 L 30.617188 12.578125 L 15.875 12.578125 Z M 15.875 8.386719 " fill-opacity="1" fill-rule="evenodd"/><path fill="url(#gradient)"  d="M 15.875 0 L 36.9375 0 L 36.9375 4.191406 L 15.875 4.191406 Z M 15.875 0 " fill-opacity="1" fill-rule="evenodd"/></svg>
