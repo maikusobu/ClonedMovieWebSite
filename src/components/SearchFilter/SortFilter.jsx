@@ -14,8 +14,6 @@ function SortFilter({ movieId, setMovieId, valueUserVote, setValueUserVote }) {
   const [valueSort, setValueSort] = useState("Popularity Descending");
   const dispatch = useDispatch();
 
-  const arrayScore = Array(10).fill(undefined);
-  console.log(setMovieId);
   useEffect(() => {
     dispatch(getGenre());
   }, []);
@@ -139,7 +137,6 @@ function SortFilter({ movieId, setMovieId, valueUserVote, setValueUserVote }) {
       <div
         className=" cursor-pointer rounded-full bg-sky-400 p-3 text-center "
         onClick={(e) => {
-          console.log(e.target);
           dispatch(RemoveData());
           dispatch(getPopularMovie(movieId));
         }}

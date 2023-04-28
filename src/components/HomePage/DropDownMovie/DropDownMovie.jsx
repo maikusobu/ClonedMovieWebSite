@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useReleaseDay } from "../../../useReleaseDay/useReleaseDay";
 function DropDownMovie({ movies, q, setIsMouse, isMouse, setMovieDown }) {
-  console.log(movies);
   if (movies != undefined)
     return (
       <>

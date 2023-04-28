@@ -47,7 +47,7 @@ function MovieData({ data, dataImage }) {
     backgroundSize: "cover",
     backgroundPosition: "left",
   };
-  console.log(data);
+
   const { movies, q } = useLoaderData();
   return (
     <div

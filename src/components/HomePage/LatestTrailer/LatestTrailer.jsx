@@ -14,7 +14,7 @@ export function LatestTrailer() {
   // const imgStyle = {
   //   backgroundImage: `url(https://image.tmdb.org/t/p/original${data[0].results[0].backdrop_path})`,
   // };
-  console.log(data);
+
   if (status == "success")
     return (
       <>

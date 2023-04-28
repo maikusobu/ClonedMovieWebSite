@@ -10,6 +10,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useReleaseDay } from "../../../useReleaseDay/useReleaseDay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AnimatePresence } from "framer-motion";
 export function ImageSlider({ dataToprated, isLoading }) {
   let dataDate = [];
   const [index, setIndex] = useState(0);
@@ -45,7 +46,11 @@ export function ImageSlider({ dataToprated, isLoading }) {
   else if (!isLoading)
     return (
       <div className=" media_width flex gap-2 px-10 pt-10 ">
-        <motion.div className="slideShow relative w-1/3 " data-index={index}>
+        <div
+          key={index}
+          className="slideShow relative w-1/3 "
+          data-index={index}
+        >
           <div className="absolute top-0 translate-y-[-50%] translate-x-[50%]  rounded-full">
             <div className="media_circle_progress h-[40px] w-[40px] rounded-full bg-black ">
               <CircularProgressbar
@@ -77,14 +82,15 @@ export function ImageSlider({ dataToprated, isLoading }) {
               ;
             </div>
           </div>
-          <img
-            key={dataToprated[index]?.title}
-            className="media_img_width aspect-[3/4] shadow-lg"
-            src={`https://image.tmdb.org/t/p/original${dataToprated[index]?.poster_path}`}
-            width="250"
-            alt={dataToprated[index]?.title}
-          />
-
+          <div>
+            <img
+              key={dataToprated[index]?.title}
+              className="media_img_width aspect-[3/4] shadow-lg"
+              src={`https://image.tmdb.org/t/p/original${dataToprated[index]?.poster_path}`}
+              width="250"
+              alt={dataToprated[index]?.title}
+            />
+          </div>
           <div className=" media_dot mt-2 flex w-1/2 justify-center">
             {dataToprated.slice(0, 5).map((movie, i) => (
               <div
@@ -146,7 +152,8 @@ export function ImageSlider({ dataToprated, isLoading }) {
             </IconContext.Provider>
             <div className=" text_date_mobile text-white">{`${dataDate}`}</div>
           </div>
-        </motion.div>
+        </div>
+
         <div className="media_paragraph_container w-2/3">
           <figure>
             <figcaption>

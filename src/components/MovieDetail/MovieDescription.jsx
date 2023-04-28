@@ -28,7 +28,6 @@ export const loader = async ({ params, request }) => {
 };
 function MovieDescription() {
   const data = useLoaderData();
-  console.log(data);
 
   return (
     <div className="  overflow-hidden bg-slate-900">

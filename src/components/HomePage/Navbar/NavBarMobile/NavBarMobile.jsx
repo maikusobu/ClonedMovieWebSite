@@ -70,14 +70,12 @@ function NavBarMobile({ navBar, setNavBar, search, setSearch, q }) {
                 name="search"
                 defaultValue={q}
                 onChange={(e) => {
-                  console.log(navigation);
                   const isFirstSearch = q == null;
                   submit(e.currentTarget.form, {
                     replace: !isFirstSearch,
                   });
                 }}
                 onBlur={(e) => {
-                  console.log(e.target);
                   setSearch(!search);
                 }}
               />
