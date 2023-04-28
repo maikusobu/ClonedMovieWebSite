@@ -5,14 +5,14 @@ import { useLoaderData } from "react-router-dom";
 import { getTheMovie } from "../HomePage/Navbar/Helper";
 export const loader = async ({ params, request }) => {
   const data = await fetch(
-    `https://api.themoviedb.org/3/movie/${params.movieID}?api_key=${api_key}&language=vi-VN`,
+    `https://api.themoviedb.org/3/movie/${params.movieID}?api_key=${api_key}&language=en-US`,
     {
       method: "GET",
       credentials: "omit",
     }
   );
   const dataImage = await fetch(
-    `https://api.themoviedb.org/3/movie/${params.movieID}/credits?api_key=${api_key}&language=vi-VN`,
+    `https://api.themoviedb.org/3/movie/${params.movieID}/credits?api_key=${api_key}&language=en-US`,
     {
       method: "GET",
       credentials: "omit",
@@ -31,7 +31,7 @@ function MovieDescription() {
   console.log(data);
 
   return (
-    <div className="  overflow-x-hidden bg-slate-900">
+    <div className="  overflow-hidden bg-slate-900">
       <MovieData data={data.dataJSON} dataImage={data.dataImageJSON} />
     </div>
   );

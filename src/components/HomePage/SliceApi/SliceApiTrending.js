@@ -3,7 +3,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const getTrendingMovie = createAsyncThunk(
   "trend/getTrendingMovie",
   async (time) => {
-    console.log(time);
     const getDB = await fetch(`
   https://api.themoviedb.org/3/trending/movie/${time}?api_key=${apikey}`);
     return getDB.json();
@@ -20,7 +19,6 @@ export const delayFulfilledMiddleware = (store) => (next) => (action) => {
   if (action.type === getTrendingMovie.fulfilled.toString()) {
     setTimeout(() => {
       let result = next(action);
-      console.log(result);
     }, 2000);
   } else {
     next(action);

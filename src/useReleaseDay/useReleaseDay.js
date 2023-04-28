@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { toDate } from "date-fns";
 export function useReleaseDay(movie) {
   const dataDate = [
@@ -12,5 +11,6 @@ export function useReleaseDay(movie) {
       .toString()
       .split(" "),
   ];
-  return dataDate;
+  const dataResult = [[dataDate[2], dataDate[1]].join(", "), dataDate[3]];
+  return dataResult.join(" ");
 }

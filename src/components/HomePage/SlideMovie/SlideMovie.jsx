@@ -71,46 +71,8 @@ export function SlideMovive() {
             </div>
           </div>
         </button>
-        {/* <Select
-          className="chose_select"
-          options={options}
-          defaultValue={options[0]}
-          styles={{
-            control: (styles, state) => {
-              return {
-                ...styles,
-                backgroundColor: "#fcd354",
-                color: state.isDisabled
-                  ? "white"
-                  : state.isSelected
-                  ? "white"
-                  : undefined,
-              };
-            },
-            option: (styles, { isDisabled, isSelected }) => {
-              return {
-                ...styles,
-                backgroundColor: isDisabled
-                  ? undefined
-                  : isSelected
-                  ? "#fcd354"
-                  : "#A7C4C2",
-                color: isDisabled ? "white" : isSelected ? "black" : undefined,
-
-                ":active": {
-                  ...styles[":active"],
-                  backgroundColor: !isDisabled
-                    ? isSelected
-                      ? "#97EFE9"
-                      : "#6A0F49"
-                    : undefined,
-                },
-              };
-            },
-          }}
-        /> */}
         <select
-          className="chose_select"
+          className="chose_select ipad:hidden"
           defaultValue={options[0]}
           onChange={(e) => {
             e.preventDefault();

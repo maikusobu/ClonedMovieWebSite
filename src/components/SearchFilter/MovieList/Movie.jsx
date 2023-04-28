@@ -2,16 +2,8 @@ import { useRef, useEffect } from "react";
 import { urlImage } from "../../../apikey";
 import { useSelector } from "react-redux";
 import { PopularStatus } from "../../HomePage/SliceApi/SliceApi";
-function Movie({
-  id,
-  isLast,
-  newLimit,
-  title,
-  poster,
-  popularity,
-  overview,
-  conti,
-}) {
+import { Link } from "react-router-dom";
+function Movie({ id, isLast, newLimit, title, poster, overview, conti }) {
   const movieRef = useRef();
   const status = useSelector(PopularStatus);
   useEffect(() => {
@@ -28,26 +20,25 @@ function Movie({
     <div
       id={id}
       ref={movieRef}
-      className="flex gap-2 overflow-hidden rounded-3xl  shadow-lg shadow"
+      className=" relative flex gap-2 overflow-hidden rounded-3xl  shadow shadow-white md:flex-col lg:h-[400px]"
     >
-      <div className=" items-start">
-        <img
-          src={`${urlImage}${poster}`}
-          width={150}
-          className="h-full"
-          loading="lazy"
-          alt={title}
-        ></img>
-      </div>
-      <div className="border-3 flex-1 p-2">
-        <div className="text-lg">
-          <h1 className="font-bold">{title}</h1>
+      <Link to={`/description/movie/${id}`}>
+        <div className=" items-start">
+          <img
+            src={`${urlImage}${poster}`}
+            width={100}
+            className=" h-full w-full md:h-[260px]  md:w-full lg:h-[300px]"
+            loading="lazy"
+            alt={title}
+          ></img>
         </div>
-        <div>
-          <p className=" text-base">{overview.substring(0, 100)}...</p>
+        <div className="border-3 flex-1 p-2">
+          <div className=" text-base md:text-lg">
+            <h1 className="font-bold">{title}</h1>
+          </div>
+          <div className=" text-xs md:hidden">{overview}</div>
         </div>
-        <div>{popularity}</div>
-      </div>
+      </Link>
     </div>
   );
 }

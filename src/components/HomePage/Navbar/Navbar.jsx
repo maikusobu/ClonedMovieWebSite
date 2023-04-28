@@ -1,10 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSleigh,
-  faSpinner,
-  faUser,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import Logo from "./lgo.svg";
 import User from "./user.svg";
@@ -25,6 +20,7 @@ export const Navbar = ({ movies, q }) => {
   const [movieDown, setMovieDown] = useState(false);
   const [navBar, setNavBar] = useState(false);
   const [search, setSearch] = useState(false);
+  const [isMouse, setIsMouse] = useState(false);
   useEffect(() => {
     inputRef.current.value = q;
   }, [q]);
@@ -33,17 +29,16 @@ export const Navbar = ({ movies, q }) => {
     <>
       <nav
         id="navBar"
-        className=" bg relative z-50 flex h-20 w-full items-center justify-around  "
+        className=" bg relative z-50 flex h-20 w-full items-center justify-around   "
       >
-        <div className="  flex h-full items-center ">
-          <div className=" ">
-            <div className="flex  items-center justify-between">
-              <div className=" min-w-[1.9rem]">
-                <div className=" aspect-square   ">
-                  <img src={Logo} />
-                </div>
-              </div>
-            </div>
+        <div className="  flex h-full cursor-pointer items-center ">
+          <div
+            className=" aspect-square  "
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <img src={Logo} />
           </div>
         </div>
 
@@ -56,12 +51,16 @@ export const Navbar = ({ movies, q }) => {
             <div
               className="  relative mx-auto duration-300 ease-in"
               onFocus={(e) => {
-                e.currentTarget.style.setProperty("width", "100%");
-                setMovieDown(!movieDown);
+                if (!isMouse) {
+                  e.currentTarget.style.setProperty("width", "100%");
+                  setMovieDown(!movieDown);
+                }
               }}
               onBlur={(e) => {
-                e.currentTarget.style.setProperty("width", "50%");
-                setMovieDown(!movieDown);
+                if (!isMouse) {
+                  e.currentTarget.style.setProperty("width", "50%");
+                  setMovieDown(!movieDown);
+                }
               }}
             >
               <input
@@ -90,21 +89,33 @@ export const Navbar = ({ movies, q }) => {
               />
               <div className=" absolute top-0  right-0 translate-y-[30%] translate-x-[-50%] cursor-pointer transition ease-in-out">
                 {naigation.state == "idle" ? (
-                  <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" />
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    size="xl"
+                    onClick={() => {
+                      navigate(`/search/${q}`);
+                    }}
+                  />
                 ) : (
                   <FontAwesomeIcon icon={faSpinner} spinPulse size="xl" />
                 )}
               </div>
               {movieDown && (
-                <ul className=" absolute top-100 w-full space-y-3 bg-gray-600">
-                  <DropDownMovie movies={movies} q={q} />
+                <ul className=" absolute top-100 w-full space-y-3  bg-gray-600">
+                  <DropDownMovie
+                    movies={movies}
+                    q={q}
+                    setIsMouse={(isMouse) => setIsMouse(isMouse)}
+                    isMouse={isMouse}
+                    setMovieDown={(movieDown) => setMovieDown(movieDown)}
+                  />
                 </ul>
               )}
             </div>
           </Form>
         </div>
 
-        <div className="media_search  flex-0 translate-x-1/2 items-center justify-center pr-8">
+        <div className="media_search  flex-0  items-center justify-center pr-8">
           <div className="relative flex items-center justify-center  gap-2">
             <div
               className=" cursor-pointer"

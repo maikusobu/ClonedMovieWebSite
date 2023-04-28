@@ -4,25 +4,14 @@ import {
   faMagnifyingGlass,
   faUser,
   faSpinner,
+  faArrowDownWideShort,
 } from "@fortawesome/free-solid-svg-icons";
 import { Form } from "react-router-dom";
-import { useNavigation, useSubmit } from "react-router-dom";
+import { useNavigation, useSubmit, useNavigate } from "react-router-dom";
 function NavBarMobile({ navBar, setNavBar, search, setSearch, q }) {
   const navigation = useNavigation();
   const submit = useSubmit();
-  // const q = navigation.location.state?.q;
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const search = e.target.search.value;
-  //   if (search) {
-  //     navigation.push({
-  //       pathname: "/search",
-  //       state: {
-  //         q: search,
-  //       },
-  //     });
-  //   }
-  // };
+  const navigate = useNavigate();
 
   return (
     <div
@@ -38,6 +27,7 @@ function NavBarMobile({ navBar, setNavBar, search, setSearch, q }) {
           onClick={(e) => {
             setNavBar(!navBar);
           }}
+          className={`${!navBar ? "navBar_mobile" : ""}`}
         />
       </div>
       <div
@@ -61,12 +51,7 @@ function NavBarMobile({ navBar, setNavBar, search, setSearch, q }) {
             className=" grow-1 flex w-full items-center  gap-5 "
             role="search"
           >
-            <div
-              className="  relative mx-auto duration-300 ease-in"
-              onBlur={(e) => {
-                setSearch(!search);
-              }}
-            >
+            <div className="  relative mx-auto duration-300 ease-in">
               <input
                 autoFocus
                 id="q"
@@ -91,11 +76,24 @@ function NavBarMobile({ navBar, setNavBar, search, setSearch, q }) {
                     replace: !isFirstSearch,
                   });
                 }}
+                onBlur={(e) => {
+                  console.log(e.target);
+                  setSearch(!search);
+                }}
               />
 
               <div className=" absolute top-0 right-0  translate-y-[30%] translate-x-[-50%] cursor-pointer transition ease-in-out">
                 {navigation.state == "idle" ? (
-                  <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" />
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    size="xl"
+                    onClick={() => {
+                      navigate(`/search/${q}`);
+                    }}
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                    }}
+                  />
                 ) : (
                   <FontAwesomeIcon icon={faSpinner} spinPulse size="xl" />
                 )}
@@ -108,6 +106,16 @@ function NavBarMobile({ navBar, setNavBar, search, setSearch, q }) {
             icon={faUser}
             size="2xl"
             style={{ color: "#ffd43b" }}
+          />
+        </div>
+        <div>
+          <FontAwesomeIcon
+            icon={faArrowDownWideShort}
+            size="2xl"
+            style={{ color: "#ffd43b" }}
+            onClick={() => {
+              navigate("/nowplaying/search");
+            }}
           />
         </div>
       </div>

@@ -12,18 +12,22 @@ import { loader as MovieDescriptionLoader } from "./components/MovieDetail/Movie
 import { loader as NavbarLoader } from "./components/HomePage/Layout/Layout";
 import { VideoPlay } from "./components/HomePage/VideoPlay/VideoPlay";
 import { loader as VideoLoader } from "./components/HomePage/VideoPlay/VideoPlay";
-import { Navbar } from "./components/HomePage/Navbar/Navbar";
+import ErrorPage from "./components/ErrorsPage/ErrorPage";
+import SearchResults from "./components/SearchResults/SearchResults";
+import { loader as SearchResultsLoader } from "./components/SearchResults/SearchResults";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     loader: NavbarLoader,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/play/movie/:movieID",
         element: <VideoPlay />,
         loader: VideoLoader,
+        errorElement: <ErrorPage />,
       },
     ],
   },
@@ -31,10 +35,19 @@ const router = createBrowserRouter([
     path: "/description/movie/:movieID",
     element: <MovieDescription />,
     loader: MovieDescriptionLoader,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/nowplaying/search",
     element: <SearchFilterContainer />,
+    loader: NavbarLoader,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/search/:keyId",
+    element: <SearchResults />,
+    errorElement: <ErrorPage />,
+    loader: SearchResultsLoader,
   },
 ]);
 

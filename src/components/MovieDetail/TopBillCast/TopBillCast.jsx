@@ -8,16 +8,22 @@ function TopBillCast({ topCast }) {
       >
         <div className="circle-spin absolute top-1/2 right-1/2 h-[100px] w-[100px]  rounded-full bg-gradient-to-r from-red to-purple"></div>
         <div className="text-2xl font-bold text-yellow">Hot cast</div>
-        <div className="flex flex-nowrap gap-4  overflow-x-scroll md:gap-0">
+        <div
+          className="flex flex-nowrap  gap-4 overflow-x-scroll border  border-[10px] border-[rgb(133,_137,_148)] p-4   "
+          id="list_content"
+        >
           {topCast
-            .filter((cast) => cast.popularity > 10)
+
             .map((cast) => (
-              <div key={cast.id} className="  w-[80%] shrink-0 md:w-[50%]">
+              <div
+                key={cast.id}
+                className="  md:shrink-2 w-[80%] shrink-0 md:w-[20%]"
+              >
                 <h1 className=" font-medium text-white">{cast.name}</h1>
-                <div className="md:max-w-sm">
+                <div className="w-full">
                   <img
                     src={`${urlImage}${cast.profile_path}`}
-                    className="w-[80%] rounded-lg"
+                    className="w-[100%] rounded-lg "
                   />
                 </div>
                 <div>
@@ -27,7 +33,8 @@ function TopBillCast({ topCast }) {
                   </div>
                 </div>
               </div>
-            ))}
+            ))
+            .slice(0, 10)}
         </div>
       </div>
     </>

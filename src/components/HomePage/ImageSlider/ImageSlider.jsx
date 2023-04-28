@@ -1,34 +1,26 @@
-import { PopularMovies } from "../SliceApi/SliceApi";
-import { useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
-import { PopularStatus } from "../SliceApi/SliceApi";
-import { AnimatePresence } from "framer-motion";
 import { IconContext } from "react-icons";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { motion } from "framer-motion";
 import "./ImageSlider.css";
 import { FaPlayCircle } from "react-icons/fa";
-import { toDate } from "date-fns";
+import { useNavigate } from "react-router-dom";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useReleaseDay } from "../../../useReleaseDay/useReleaseDay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { api_key } from "../../../apikey";
-
 export function ImageSlider({ dataToprated, isLoading }) {
   let dataDate = [];
-
   const [index, setIndex] = useState(0);
   const [num, setNum] = useState(0);
-
+  const navigate = useNavigate();
   const imgSlide = useRef();
   const handleChange = (index) => {
     setIndex(index);
     setNum(index);
   };
-  console.log(isLoading);
-  console.log(dataToprated);
+
   useEffect(() => {
     imgSlide.current = setInterval(() => {
       setNum((prev) => {
@@ -47,12 +39,12 @@ export function ImageSlider({ dataToprated, isLoading }) {
 
   if (!isLoading) {
     const movie = dataToprated[index];
-    dataDate = [...useReleaseDay(movie)];
+    dataDate = useReleaseDay(movie);
   }
   if (isLoading) return <h1 className="text-white">Loading</h1>;
   else if (!isLoading)
     return (
-      <div className=" media_width flex px-10 pt-10 ">
+      <div className=" media_width flex gap-2 px-10 pt-10 ">
         <motion.div className="slideShow relative w-1/3 " data-index={index}>
           <div className="absolute top-0 translate-y-[-50%] translate-x-[50%]  rounded-full">
             <div className="media_circle_progress h-[40px] w-[40px] rounded-full bg-black ">
@@ -144,13 +136,18 @@ export function ImageSlider({ dataToprated, isLoading }) {
           <div className="icon_mobile">
             <IconContext.Provider
               value={{ className: "", size: "2rem", color: "#dc2430" }}
+              className="cursor-pointer"
             >
-              <FaPlayCircle />
+              <FaPlayCircle
+                onClick={() => {
+                  navigate(`play/movie/${dataToprated[index]?.id}`);
+                }}
+              />
             </IconContext.Provider>
-            <div className=" text_date_mobile text-white">{`${dataDate[2]}  ${dataDate[1]}  ${dataDate[3]}`}</div>
+            <div className=" text_date_mobile text-white">{`${dataDate}`}</div>
           </div>
         </motion.div>
-        <div className="media_paragraph_container w-1/2">
+        <div className="media_paragraph_container w-2/3">
           <figure>
             <figcaption>
               <h1 className="media_text_heading font-bold text-[#FCD354]">
@@ -172,15 +169,20 @@ export function ImageSlider({ dataToprated, isLoading }) {
               {dataToprated[index]?.overview.substring(0, 200) + "...."}
             </p>
             <div className="icon_play flex gap-4 pt-4 pb-4">
-              <div>
+              <div
+                onClick={() => {
+                  navigate(`play/movie/${dataToprated[index]?.id}`);
+                }}
+                className=" cursor-pointer"
+              >
                 <IconContext.Provider
-                  value={{ className: "", size: "3em", color: "#FCD354" }}
+                  value={{ className: "", size: "3em", color: "#dc2430" }}
                 >
                   <FaPlayCircle />
                 </IconContext.Provider>
               </div>
             </div>
-            <div className=" text_date text-white">{`${dataDate[2]}  ${dataDate[1]}  ${dataDate[3]}`}</div>
+            <div className=" text_date text-white">{`${dataDate}`}</div>
           </figure>
         </div>
       </div>

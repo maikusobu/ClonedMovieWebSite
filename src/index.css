@@ -26,8 +26,9 @@ body {
 }
 
 #root {
-  height: 100vh;
+  height: 100%;
   width: 100%;
+  position: relative;
 }
 .media_text_heading {
   font-size: calc(1rem + 1.5vw);
@@ -40,31 +41,19 @@ p {
   width: 500px;
   overflow: hidden;
 }
-/* details[open] summary > span > svg {
-  transform: rotate(180deg);
-  transition: transform 0.3s ease-in-out;
-} */
+
 .blob {
   height: 50%;
   aspect-ratio: 1;
-  position: absolute;
+  position: fixed;
   left: 40%;
   top: 10%;
   z-index: -10;
-  filter: blur(100px);
+  filter: blur(120px);
   border-radius: 50%;
-  background: #7b4397; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #dc2430,
-    #7b4397
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #dc2430,
-    #7b4397
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+  background: #7b4397;
+  background: -webkit-linear-gradient(to right, #dc2430, #7b4397);
+  background: linear-gradient(to right, #dc2430, #7b4397);
   animation: rotate 8s infinite;
   animation-timing-function: ease-in;
 }
@@ -77,11 +66,7 @@ p {
   }
 }
 .blur {
-  position: absolute;
-  height: 100%;
-  width: 100%;
   backdrop-filter: blur(200px);
-  z-index: -1;
 }
 .backdrop {
   position: absolute;
@@ -93,55 +78,6 @@ p {
   background-color: red;
   border: 1px solid white;
 }
-
-.CircularProgressbar {
-  width: 100%;
-
-  vertical-align: middle;
-}
-
-.CircularProgressbar .CircularProgressbar-path {
-  stroke: #3e98c7;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 0.5s ease 0s;
-}
-
-.CircularProgressbar .CircularProgressbar-trail {
-  stroke: #d6d6d6;
-  /* Used when trail is not full diameter, i.e. when props.circleRatio is set */
-  stroke-linecap: round;
-}
-
-.CircularProgressbar .CircularProgressbar-text {
-  fill: yellow;
-  font-size: 4px;
-  dominant-baseline: middle;
-  text-anchor: middle;
-}
-
-.CircularProgressbar .CircularProgressbar-background {
-  fill: #d6d6d6;
-}
-.chose_select {
-  display: none;
-}
-
-.CircularProgressbar.CircularProgressbar-inverted
-  .CircularProgressbar-background {
-  fill: #3e98c7;
-}
-
-.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-text {
-  fill: #fff;
-}
-
-.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-path {
-  stroke: #fff;
-}
-
-.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-trail {
-  stroke: transparent;
-}
 #video_popup {
   background-color: rgb(0 0 0 / 0.5);
   position: fixed;
@@ -151,7 +87,6 @@ p {
   width: 100%;
   height: 100%;
 }
-/* clears the 'X' from Internet Explorer */
 input[type="search"]::-ms-clear {
   display: none;
   width: 0;
@@ -162,13 +97,20 @@ input[type="search"]::-ms-reveal {
   width: 0;
   height: 0;
 }
-
-/* clears the 'X' from Chrome */
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
   display: none;
+}
+
+#navBar::-webkit-scrollbar {
+  display: none;
+}
+
+#navBar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .listMovie {
   height: 300px;
@@ -189,7 +131,6 @@ input[type="search"]::-webkit-search-results-decoration {
   --color-yellow: #fcd354;
   --color-black: #1d1e21;
 }
-
 #list_content {
   border-bottom: none;
 }
@@ -206,15 +147,11 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 #list_content::-webkit-scrollbar-thumb {
-  background: -webkit-linear-gradient(
-    to right,
-    #dc2430,
-    #7b4397
-  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right, #dc2430, #7b4397);
   background: linear-gradient(to right, #dc2430, #7b4397);
   border-radius: 15px;
   width: 10%;
-  transition: all 10s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 100000s linear;
 }
 
 #list_content::-webkit-scrollbar-thumb:hover {
@@ -225,9 +162,14 @@ input[type="search"]::-webkit-search-results-decoration {
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #dc2430 0, #7b4397 40%);
 }
+#list_content::-webkit-scrollbar-thumb:active {
+  background: -webkit-linear-gradient(to right, #790a12 0%, #683681 40%);
+  background: linear-gradient(to right, #790a12 0%, #683681 40%);
+}
 #list_content.trailer {
   border-bottom: rgb(133, 137, 148);
 }
+
 .circle-spin {
   transform: translateX(50%);
   filter: blur(60px);
@@ -264,6 +206,14 @@ input[type="search"]::-webkit-search-results-decoration {
     justify-content: center;
     gap: 50px;
   }
+  .image_responsive {
+    margin: 0;
+  }
+}
+@media screen and (max-width: 800px) {
+  .chose_button {
+    display: none;
+  }
 }
 @media screen and (max-width: 590px) {
   .image_responsive {
@@ -291,9 +241,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
     display: block;
   }
-  .chose_button {
-    display: none;
-  }
+
   .chose_select {
     display: block;
   }
@@ -316,6 +264,14 @@ input[type="search"]::-webkit-search-results-decoration {
 .disable {
   opacity: 0.6;
   cursor: not-allowed;
+}
+@media screen and (max-width: 440px) {
+  .media_text_paragraph_mobile {
+    display: none;
+  }
+  .media_text_paragraph {
+    display: block;
+  }
 }
 @media screen and (max-width: 420px) {
   .media_mobile_container_button {

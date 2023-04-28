@@ -4,22 +4,25 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getGenre } from "../HomePage/SliceApi/SliceApi";
 import ListGenres from "./ListGenres/ListGenres";
-import DatePicker from "./DatePicker/DatePicker";
+
+import RangeSliderInput from "./RangeSlider/RangeSlider";
+import "react-range-slider-input/dist/style.css";
 import { getPopularMovie } from "../HomePage/SliceApi/SliceApi";
 import { RemoveData } from "../HomePage/SliceApi/SliceApi";
-function SortFilter({ movieId, setMovieId }) {
+function SortFilter({ movieId, setMovieId, valueUserVote, setValueUserVote }) {
   const data = useSelector(genreSelector);
   const [valueSort, setValueSort] = useState("Popularity Descending");
   const dispatch = useDispatch();
+
   const arrayScore = Array(10).fill(undefined);
   console.log(setMovieId);
   useEffect(() => {
     dispatch(getGenre());
   }, []);
   return (
-    <div className="space-y-2 p-4">
+    <div className="space-y-2 p-4 text-white">
       <details className=" group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-        <summary className="flex cursor-pointer items-center justify-between gap-2 p-4 text-gray-900 transition">
+        <summary className="flex cursor-pointer items-center justify-between gap-2 p-4 transition">
           <span className="text-sm font-medium">Sort</span>
           <span className="transition group-open:-rotate-180">
             <svg
@@ -41,7 +44,7 @@ function SortFilter({ movieId, setMovieId }) {
 
         <label
           htmlFor="Sort"
-          className="dark:text-whit mb-2 block p-4 text-sm font-medium text-gray-900"
+          className="dark:text-whit mb-2 block p-4 text-sm font-medium"
         >
           Sorted based on the results
         </label>
@@ -54,7 +57,7 @@ function SortFilter({ movieId, setMovieId }) {
             });
           }}
           id="Sort"
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          className="block w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
         >
           <option value="popularity.desc">Popularity Descending</option>
           <option value="popularity.asc">Popularity Ascending</option>
@@ -64,8 +67,10 @@ function SortFilter({ movieId, setMovieId }) {
       </details>
 
       <details className="group  overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-        <summary className="flex cursor-pointer items-center justify-between gap-2 p-4 text-gray-900 transition">
-          <span className="text-sm font-medium"> Filter by Genres</span>
+        <summary className="flex cursor-pointer items-center justify-between gap-2 p-4 transition">
+          <span className="text-sm font-medium">
+            Filter by Genres (Only supported 1 genre at a time)
+          </span>
 
           <span className="transition group-open:-rotate-180">
             <svg
@@ -96,13 +101,13 @@ function SortFilter({ movieId, setMovieId }) {
               />
             ))}
           </ul>
-          <div id="date-picker">
+          {/* <div id="date-picker">
             <DatePicker />
-          </div>
+          </div> */}
         </div>
       </details>
       <details className=" group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-        <summary className="flex cursor-pointer items-center justify-between gap-2 p-4 text-gray-900 transition">
+        <summary className="flex cursor-pointer items-center justify-between gap-2 p-4 transition">
           <span className="text-sm font-medium"> Filter by UserScores </span>
 
           <span className="transition group-open:-rotate-180">
@@ -122,7 +127,14 @@ function SortFilter({ movieId, setMovieId }) {
             </svg>
           </span>
         </summary>
-        <div className="p-4">{/* <CustomRangeSlider /> */}</div>
+        <div className="flex flex-col gap-5 p-4 ">
+          <RangeSliderInput
+            valueUserVote={valueUserVote}
+            setValueUserVote={(value) => setValueUserVote(value)}
+            movieId={movieId}
+            setMovieId={(movieId) => setMovieId(movieId)}
+          />
+        </div>
       </details>
       <div
         className=" cursor-pointer rounded-full bg-sky-400 p-3 text-center "

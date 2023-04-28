@@ -20,10 +20,9 @@ export const getListGenre = createAsyncThunk(
 );
 export const getPopularMovie = createAsyncThunk(
   "genre/getPopularMovie",
-  async ({ page, sort, id }, thunkAPI) => {
-    console.log(page);
+  async ({ page, sort, id, min, max }, thunkAPI) => {
     const getDB = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${apikey}&language=en-US&sort_by=${sort}&include_adult=false&include_video=true&page=${page}&with_watch_monetization_types=free${
+      `https://api.themoviedb.org/3/discover/movie?api_key=${apikey}&language=en-US&sort_by=${sort}&include_adult=false&include_video=true&page=${page}&vote_average.gte=${min}&vote_average.lte=${max}&with_watch_monetization_types=free${
         id ? "&with_genres=" + id : ""
       }`
     );

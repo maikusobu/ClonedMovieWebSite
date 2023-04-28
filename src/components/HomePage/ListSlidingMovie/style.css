@@ -1,41 +1,32 @@
-#list_content {
-  --color-red: #dc2430;
-  --color-yellow: #fcd354;
-  --color-black: #1d1e21;
-}
-
-#list_content {
-  border-bottom: none;
-}
-
-#list_content::-webkit-scrollbar {
-  height: 10px;
-  border-radius: 10px;
-}
-
-/* Track */
-#list_content::-webkit-scrollbar-track {
-  background-clip: content-box;
-  background: rgb(133, 137, 148);
-}
-
-#list_content::-webkit-scrollbar-thumb {
-  background: -webkit-linear-gradient(
-    to right,
-    #dc2430,
-    #7b4397
-  ); /* Chrome 10-25, Safari 5.1-6 */
+.simplebar-horizontal .simplebar-scrollbar {
   background: linear-gradient(to right, #dc2430, #7b4397);
-  border-radius: 15px;
-  width: 10%;
-  transition: all 10s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border: none;
+  border-radius: 20px;
 }
-
-#list_content::-webkit-scrollbar-thumb:hover {
-  background: -webkit-linear-gradient(
-    to right,
-    #dc2430 0,
-    #7b4397 40%
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #dc2430 0, #7b4397 40%);
+.simplebar-content-wrapper {
+  border-width: 10px;
+  border-color: rgb(133, 137, 148);
+  padding: 20px;
+  border-radius: 5px;
+}
+.simplebar-scrollbar.simplebar-hover {
+  background: linear-gradient(to right, #dc2430 0, #7b4397 50%);
+}
+.simplebar-scrollbar.simplebar-hover:before {
+  display: none;
+}
+.simplebar-content {
+  display: flex;
+  height: 75%;
+  flex-wrap: nowrap;
+  gap: 2.5rem;
+  flex-direction: row;
+}
+.simplebar-scrollbar:before {
+  border-radius: 0;
+  transition-delay: 0s;
+  background: none;
+}
+.whenClick {
+  background: linear-gradient(to right, #9f161f 0, #3a1b4a 50%);
 }

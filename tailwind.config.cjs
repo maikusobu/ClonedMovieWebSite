@@ -13,7 +13,7 @@ module.exports = {
         lightYellow: "#fcd354",
       },
       screens: {
-        ipad: "430px",
+        ipad: "801px",
       },
     },
   },
