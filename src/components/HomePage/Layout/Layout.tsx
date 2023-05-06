@@ -67,6 +67,7 @@ const Layout = (): JSX.Element => {
 
        <div className="blob"></div>
        <div
+         id="layout"
          className=" relative h-full overflow-hidden bg-transparent "
          onLoad={(e) => {
            e.preventDefault();

@@ -333,6 +333,7 @@ input[type="search"]::-webkit-search-results-decoration {
   }
   #root {
     overflow-x: hidden;
+    overflow-y: scroll;
   }
   .main_navbar {
     display: block !important;

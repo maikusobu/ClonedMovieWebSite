@@ -26,7 +26,7 @@ function Movie({ id, isLast, newLimit, title, poster, overview, conti } : {id: n
       <Link to={`/description/movie/${id}`}>
         <div className=" items-start">
           <img
-            src={`${import.meta.env.VITE_IMG_URL}${poster}`}
+            src={`${import.meta.env.VITE_URL_IMAGE}${poster}`}
             width={100}
             className=" h-full w-full md:h-[260px]  md:w-full lg:h-[300px]"
             loading="lazy"

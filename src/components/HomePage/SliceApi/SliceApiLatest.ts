@@ -7,9 +7,7 @@ type state = {
   dataKey: unknown[];
   status: string;
   statusKey: string;
-  error: string;
- 
-  
+  error: string; 
 }
 const initialState: state = {
   data: [],
@@ -32,7 +30,7 @@ export const delayFulfilleLatestdMiddleware: Middleware = (store) => (next) => (
   if (action.type === getLatestMovie.fulfilled.toString()) {
     setTimeout(() => {
     next(action);
-    }, 10000);
+    }, 0);
   } else {
     next(action);
   }

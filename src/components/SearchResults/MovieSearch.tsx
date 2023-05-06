@@ -10,7 +10,7 @@ function MovieSearch({ movie } : {movie: MovieType} ) {
       <Link to={`/description/movie/${movie.id}`}>
         <div className=" items-start">
           <img
-            src={`${import.meta.env.VITE_IMG_URL}${movie.poster_path}`}
+            src={`${import.meta.env.VITE_URL_IMAGE}${movie.poster_path}`}
             width={100}
             className=" h-full w-full md:h-[260px]  md:w-full lg:h-[300px]"
             loading="lazy"

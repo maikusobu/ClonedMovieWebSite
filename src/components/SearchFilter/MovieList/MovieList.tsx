@@ -48,7 +48,7 @@ function MovieList({ movieId, setMovieId }: MovieList) {
 
         {status === "pending" && <h1 className="text-center">Pending....</h1>}
       </div>
-      {!conti && (
+      {!conti && results.length > 0 && (
         <div
           onClick={() => {
             setConti(true);

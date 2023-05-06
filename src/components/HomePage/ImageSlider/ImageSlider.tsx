@@ -56,7 +56,7 @@ export function ImageSlider({ dataToprated, isLoading } : ImageSliderType) {
           data-index={index}
         >
           <div className="absolute top-0 translate-y-[-50%] translate-x-[50%]  rounded-full">
-            <div className="media_circle_progress h-[40px] w-[40px] rounded-full bg-black ">
+            <div className="media_circle_progress h-[30px] w-[30px] rounded-full bg-black ">
               <CircularProgressbar
                 value={dataToprated[index]?.vote_average * 10 || 100}
                 text={`${dataToprated[index]?.vote_average || 100}`}

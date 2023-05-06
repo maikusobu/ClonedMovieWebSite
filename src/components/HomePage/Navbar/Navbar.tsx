@@ -18,6 +18,8 @@ type NavbarProps = {
   movies: MovieType[];
   q: string;
 }
+let lastScrollTop = 300;
+let fixedNav: boolean;
 export const Navbar = ({ movies, q } : NavbarProps): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null!);
   const submit = useSubmit();
@@ -27,11 +29,32 @@ export const Navbar = ({ movies, q } : NavbarProps): JSX.Element => {
   const [navBar, setNavBar] = useState(false);
   const [search, setSearch] = useState(false);
   const [isMouse, setIsMouse] = useState(false);
+  const [scrollNavBar, setScrollNavBar] = useState(false);
     const { ref, inView, entry } = useInView({
     threshold: 0,
     });
+ useEffect(() => {
+   const handleScroll = () => {
+   
+     
+       if (window.scrollY > lastScrollTop) {
+         setScrollNavBar(true);
+       } else {
+   
+         setScrollNavBar(false);
+       }
+       lastScrollTop = window.scrollY;
+     
+   }
+   window.addEventListener("scroll", handleScroll);
+   return () => {
+    // 
+      window.removeEventListener("scroll", handleScroll);
+    };
+}, []);
   useEffect(() => {
     inputRef.current.value = q;
+    
   }, [q]);
 
   return (
@@ -50,7 +73,7 @@ export const Navbar = ({ movies, q } : NavbarProps): JSX.Element => {
               navigate("/");
             }}
           >
-            <img src={Logo} />
+            <img src={Logo} width={50} height={50} alt="logo" />
           </div>
         </div>
 
@@ -61,7 +84,7 @@ export const Navbar = ({ movies, q } : NavbarProps): JSX.Element => {
             role="search"
           >
             <div
-              className="  relative mx-auto duration-300 ease-in"
+              className="  relative mx-auto duration-300 ease-in w-1/2"
               onFocus={(e) => {
                 if (!isMouse) {
                   e.currentTarget.style.setProperty("width", "100%");
@@ -138,10 +161,10 @@ export const Navbar = ({ movies, q } : NavbarProps): JSX.Element => {
                 navigate("/nowplaying/search");
               }}
             >
-              <img src={Sort}></img>
+              <img src={Sort} height={30} width={30} alt="sort" ></img>
             </div>
             <div>
-              <img src={User}></img>
+              <img src={User} height={30} width={30} alt="user"></img>
             </div>
           </div>
         </div>
@@ -164,23 +187,23 @@ export const Navbar = ({ movies, q } : NavbarProps): JSX.Element => {
         }
         {
           !inView && <>
-            <div className="media_search md:w-85 flex lg:w-96 fixed">
+            <div className={`media_search md:w-85 flex lg:w-96 fixed  transition-all duration-700  ${scrollNavBar ? " top-[-100px] " : "top-0 "}`}>
           <Form
             id="search-form"
             className=" grow-1 flex w-full items-center  gap-5 "
             role="search"
           >
             <div
-              className="  relative mx-auto duration-300 ease-in"
+              className="  relative mx-auto duration-300 ease-in w-full"
               onFocus={(e) => {
                 if (!isMouse) {
-                  e.currentTarget.style.setProperty("width", "100%");
+                  // e.currentTarget.style.setProperty("width", "100%");
                   setMovieDown(!movieDown);
                 }
               }}
               onBlur={(e) => {
                 if (!isMouse) {
-                  e.currentTarget.style.setProperty("width", "50%");
+                  // e.currentTarget.style.setProperty("width", "50%");
                   setMovieDown(!movieDown);
                 }
               }}
@@ -245,7 +268,7 @@ export const Navbar = ({ movies, q } : NavbarProps): JSX.Element => {
           setNavBar={(nav: boolean) => setNavBar(nav)}
           navBar={navBar}
           search={search}
-          setSearch={setSearch}
+          setSearch={(search: boolean) => setSearch(search)}
         />
       </nav>
     </>
