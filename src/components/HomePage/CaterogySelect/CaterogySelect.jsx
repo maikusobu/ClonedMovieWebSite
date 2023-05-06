@@ -1,5 +1,4 @@
 import { getListGenre } from "../SliceApi/SliceApi";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { ListMovie } from "../ListMovie/ListMovie";
 import { BestMovie } from "../BestMovie/BestMovie";

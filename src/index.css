@@ -23,6 +23,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
   width: 100%;
+
+  background-color: rgb(15 23 42 / 1);
 }
 
 #root {
