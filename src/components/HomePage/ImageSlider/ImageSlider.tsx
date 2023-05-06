@@ -49,7 +49,7 @@ export function ImageSlider({ dataToprated, isLoading } : ImageSliderType) {
   if (isLoading) return <h1 className="text-white">Loading</h1>;
   else 
     return (
-      <div className=" media_width flex gap-2 px-10 pt-10 ">
+      <div className=" media_width flex gap-2 px-10  ">
         <div
           key={index}
           className="slideShow relative w-1/3 "

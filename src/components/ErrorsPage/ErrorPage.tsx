@@ -1,11 +1,28 @@
 import { useRouteError, isRouteErrorResponse } from "react-router-dom";
 
 function ErrorPage() {
-
+  let er = "";
   const error = useRouteError();
-  if (isRouteErrorResponse(error)) 
-  return (
-    <div className="grid h-screen place-content-center bg-white px-4">
+  if (typeof error === 'object' && error !== null && 'data' in error) {
+  const data = error.data;
+  if (typeof data === 'object' && data !== null && 'message' in data) {
+    const message = data.message;
+    if (typeof message === 'string') {
+      // Now you can safely use message
+      er = message;
+    }
+  }
+}
+  if (isRouteErrorResponse(error)) return <>
+  
+    <div>
+     action or loader is not working
+  </div>
+  </>
+  
+  else 
+     return (
+    <div className="grid h-full place-content-center bg-white px-4">
       <div className="text-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -31,21 +48,11 @@ function ErrorPage() {
         </h1>
 
         <p className="mt-4 text-gray-500">We can't find that page.</p>
-        <p className="mt-4 text-gray-500">{error.data?.message}</p>
+       { <p className="mt-4 text-gray-500">{er}</p>}
         <p>Please wait!! the dev of website is fixing</p>
       </div>
     </div>
     );
-  else 
-    return (
-      <div>
-        Seem the error page is not working properly. Please wait!! the dev of website is fixing
-      </div>
-    )
-  
-     
-  
-  
 }
 
 export default ErrorPage;

@@ -12,7 +12,7 @@ import { getTheMovie } from "../Navbar/Helper";
 import { getLatestMovie } from "../SliceApi/SliceApiLatest";
 import { LoaderData } from "../../../Type/loaderType"
 import { latestStatus } from "../SliceApi/SliceApiLatest";
-
+import Footer from "../Footer/Footer";
 
 
 
@@ -85,11 +85,11 @@ const Layout = (): JSX.Element => {
 
          <Navbar movies={movies!} q={q ? q : ""} />
 
-         <div className=" media_image_container   mx-20 h-[600px] ">
+         <div className=" media_image_container mx-20 mt-10 h-[600px] ">
            <ImageSlider dataToprated={dataToprated} isLoading={isLoading} />
          </div>
 
-         <div className=" image_responsive mx-20 h-[600px] ">
+         <div className=" image_responsive mx-20  h-[600px] ">
            <SlideMovive />
          </div>
 
@@ -112,8 +112,11 @@ const Layout = (): JSX.Element => {
           handleSetPage(page);
         }}
       /> */}
-         <div className=" trailer_mobile image_responsive mx-20 flex  h-[600px] flex-col gap-4">
+         <div className=" trailer_mobile image_responsive mx-20 flex h-[300px] lg:h-[500px] flex-col gap-4">
            <LatestTrailer />
+         </div>
+         <div>
+         <Footer/> 
          </div>
        </div>
      </>
