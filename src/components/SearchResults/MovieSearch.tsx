@@ -1,7 +1,6 @@
-
 import { Link } from "react-router-dom";
 import { MovieType } from "../../Type/MovieType";
-function MovieSearch({ movie } : {movie: MovieType} ) {
+function MovieSearch({ movie }: { movie: MovieType }) {
   return (
     <div
       id={Number(movie.id).toString()}

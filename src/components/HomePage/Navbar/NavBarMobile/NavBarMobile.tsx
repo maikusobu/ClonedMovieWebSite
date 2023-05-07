@@ -9,14 +9,19 @@ import {
 import { Form } from "react-router-dom";
 import { useNavigation, useSubmit, useNavigate } from "react-router-dom";
 type NavBarMobileProps = {
-  navBar: boolean,
-  setNavBar: (navBar: boolean) => void,
-  search: boolean,
-  setSearch: (search: boolean) => void,
-  q: string,
-
-}
-function NavBarMobile({ navBar, setNavBar, search, setSearch, q }: NavBarMobileProps) {
+  navBar: boolean;
+  setNavBar: (navBar: boolean) => void;
+  search: boolean;
+  setSearch: (search: boolean) => void;
+  q: string;
+};
+function NavBarMobile({
+  navBar,
+  setNavBar,
+  search,
+  setSearch,
+  q,
+}: NavBarMobileProps) {
   const navigation = useNavigation();
   const submit = useSubmit();
   const navigate = useNavigate();

@@ -3,17 +3,17 @@ import "react-range-slider-input/dist/style.css";
 import { useState, useEffect } from "react";
 import { movieidType } from "../SearchFilterContainer";
 type RangeSliderInputProps = {
-  valueUserVote: number[],
-  setValueUserVote: (value: number[]) => void,
-  movieId: movieidType,
-  setMovieId: (value: movieidType) => void
-}
+  valueUserVote: number[];
+  setValueUserVote: (value: number[]) => void;
+  movieId: movieidType;
+  setMovieId: (value: movieidType) => void;
+};
 function RangeSliderInput({
   valueUserVote,
   setValueUserVote,
   movieId,
   setMovieId,
-} : RangeSliderInputProps) {
+}: RangeSliderInputProps) {
   useEffect(() => {
     setMovieId({
       ...movieId,

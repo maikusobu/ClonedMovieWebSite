@@ -4,16 +4,26 @@ import MovieData from "./MovieData/MovieData";
 import { useLoaderData } from "react-router-dom";
 import { getTheMovie } from "../HomePage/Navbar/Helper";
 import { LoaderData } from "../../Type/loaderType";
-export const loader = async ({ params, request } : {params : any, request : any}) => {
+export const loader = async ({
+  params,
+  request,
+}: {
+  params: any;
+  request: any;
+}) => {
   const data = await fetch(
-    `https://api.themoviedb.org/3/movie/${params.movieID}?api_key=${import.meta.env.VITE_TMBD_API_KEY }&language=en-US`,
+    `https://api.themoviedb.org/3/movie/${params.movieID}?api_key=${
+      import.meta.env.VITE_TMBD_API_KEY
+    }&language=en-US`,
     {
       method: "GET",
       credentials: "omit",
     }
   );
   const dataImage = await fetch(
-    `https://api.themoviedb.org/3/movie/${params.movieID}/credits?api_key=${import.meta.env.VITE_TMBD_API_KEY }&language=en-US`,
+    `https://api.themoviedb.org/3/movie/${params.movieID}/credits?api_key=${
+      import.meta.env.VITE_TMBD_API_KEY
+    }&language=en-US`,
     {
       method: "GET",
       credentials: "omit",

@@ -8,16 +8,15 @@ import { MovieType } from "../../../Type/MovieType";
 import { useEffect, useState } from "react";
 import Movie from "./Movie";
 import { movieidType } from "../SearchFilterContainer";
+import { useReleaseDay } from "../../../useReleaseDay/useReleaseDay";
 type MovieList = {
-  movieId: movieidType ;
+  movieId: movieidType;
   setMovieId: (movieId: movieidType) => void;
-}
+};
 function MovieList({ movieId, setMovieId }: MovieList) {
   const [conti, setConti] = useState(false);
- const results = useAppSelector(PopularMovies);
-
+  const results = useAppSelector(PopularMovies);
   const dispatch = useAppDispatch();
-
   const status = useAppSelector(PopularStatus);
 
   useEffect(() => {
@@ -26,7 +25,7 @@ function MovieList({ movieId, setMovieId }: MovieList) {
 
   return (
     <div>
-      <div className="space-y-8 p-[40px] md:grid md:grid-cols-[repeat(auto-fill,minmax(180px,1fr))]    md:justify-between md:gap-4 md:space-y-0 md:p-4">
+      <div className="   grid auto-rows-auto space-y-8 p-[40px] md:grid md:grid-cols-[repeat(auto-fill,minmax(180px,1fr))]  md:justify-between md:gap-4 md:space-y-0 md:p-4">
         {results.map((result, i) => (
           <Movie
             newLimit={() =>
@@ -38,10 +37,11 @@ function MovieList({ movieId, setMovieId }: MovieList) {
             isLast={i === results.length - 1}
             key={result.id}
             id={result.id}
+            release={result.release_date ? useReleaseDay(result) : ""}
             title={result.title}
-      
             poster={result.poster_path}
             overview={result.overview}
+            vote={result?.vote_average}
             conti={conti}
           />
         ))}

@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 type colorType = {
-  imageUrl: string,
-  color: string,
-  setColor: (color: string) => void,
-  textColor: string,
-  setTextColor: (color: string) => void,
-  rgba: string,
-  setRgba: (color: string) => void,
-  children?: React.ReactNode, 
-}
+  imageUrl: string;
+  color: string;
+  setColor: (color: string) => void;
+  textColor: string;
+  setTextColor: (color: string) => void;
+  rgba: string;
+  setRgba: (color: string) => void;
+  children?: React.ReactNode;
+};
 type Color = {
-  [key : string] : number,
-}
+  [key: string]: number;
+};
 const ImageColorExtractor = ({
   imageUrl,
   children,
@@ -20,7 +20,7 @@ const ImageColorExtractor = ({
   textColor,
   setTextColor,
   setRgba,
-} : colorType) => {
+}: colorType) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -39,13 +39,14 @@ const ImageColorExtractor = ({
             canvas.width,
             canvas.height
           ).data;
-        
+
           const color = getDominantColor(imageData);
           const colorRbga = [...color];
 
           colorRbga.push(0.5);
 
-          const luminace = 0.299 * color[0] + 0.587 * color[1] + 0.114 * color[2];
+          const luminace =
+            0.299 * color[0] + 0.587 * color[1] + 0.114 * color[2];
 
           const givenColor = 3.6 * (luminace + 0.05) - 0.05;
 

@@ -13,7 +13,9 @@ export const store = configureStore({
     latestReducer: latestSlice,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(delayFulfilledMiddleware).concat(delayFulfilleLatestdMiddleware),
+    getDefaultMiddleware()
+      .concat(delayFulfilledMiddleware)
+      .concat(delayFulfilleLatestdMiddleware),
 });
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

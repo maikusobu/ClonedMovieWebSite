@@ -1,6 +1,6 @@
 const apikey = "d438f2f8ef299fb8e091eed12ef4c422";
 import { MovieType } from "../../../Type/MovieType";
-export const getTheMovie = async (name : string) => {
+export const getTheMovie = async (name: string) => {
   if (name) {
     try {
       const data = await fetch(

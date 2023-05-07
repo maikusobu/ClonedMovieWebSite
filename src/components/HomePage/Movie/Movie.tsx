@@ -1,6 +1,5 @@
-
 import { MovieType } from "../../../Type/MovieType";
-export const Movie = ({ movie } : {movie : MovieType}) => {
+export const Movie = ({ movie }: { movie: MovieType }) => {
   return (
     <div className="">
       <div className="">

@@ -1,34 +1,30 @@
-
 import { MovieType } from "../../../Type/MovieType";
+import { movieidType } from "../SearchFilterContainer";
 type ListGenreType = {
-  id: number;
+  genre_id: number;
   name: string;
-  setMovieId: (movieId: {    id: number,
-    page: number,
-    sort: string
-    min: number,
-    max: number,} ) => void;
-  movieId: {
-        id: number,
-    page: number,
-    sort: string
-    min: number,
-    max: number,
-  }
-}
-function ListGenres({ id, name, movieId, setMovieId } : ListGenreType) {
+  setMovieId: (movieId: movieidType) => void;
+  movieId: movieidType;
+};
+function ListGenres({ genre_id, name, movieId, setMovieId }: ListGenreType) {
   return (
     <li
-      data-id={id}
+      data-id={genre_id}
       className={`m-1 inline-flex cursor-pointer rounded-3xl bg-slate-400 p-4 ${
-        id === movieId.id ? "bg-slate-600" : ""
+        movieId.id.find((movieid) => movieid === genre_id) ? "bg-slate-600" : ""
       }`}
       onClick={() => {
-        setMovieId({
-          ...movieId,
-          id: id,
-         
-        });
+        if (movieId.id.find((movieid) => movieid === genre_id)) {
+          setMovieId({
+            ...movieId,
+            id: movieId.id.filter((movieid) => movieid !== genre_id),
+          });
+        } else {
+          setMovieId({
+            ...movieId,
+            id: [...(movieId.id as number[]), genre_id as number] as number[],
+          });
+        }
       }}
     >
       {name}

@@ -8,16 +8,18 @@ import { useNavigation } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { LoaderData } from "../../../Type/loaderType";
 import { useNavigate } from "react-router-dom";
-export async function loader({ params } : {params: any}) {
+export async function loader({ params }: { params: any }) {
   const data = await fetch(`
-  https://api.themoviedb.org/3/movie/${params.movieID}/videos?api_key=${import.meta.env.VITE_TMBD_API_KEY }&language=en-US`);
+  https://api.themoviedb.org/3/movie/${params.movieID}/videos?api_key=${
+    import.meta.env.VITE_TMBD_API_KEY
+  }&language=en-US`);
   return data.json();
 }
 
 export function VideoPlay() {
-  const navigate = useNavigate() 
+  const navigate = useNavigate();
   const navigation = useNavigation();
-  const data = useLoaderData() as LoaderData<typeof loader>;;
+  const data = useLoaderData() as LoaderData<typeof loader>;
 
   return (
     <div id="video_popup" className=" aspect-video">

@@ -76,10 +76,6 @@ p {
   height: 100%;
   width: 100%;
 }
-.simplebar-scrollbar {
-  background-color: red;
-  border: 1px solid white;
-}
 #video_popup {
   background-color: rgb(0 0 0 / 0.5);
   position: fixed;
@@ -176,6 +172,10 @@ input[type="search"]::-webkit-search-results-decoration {
   transform: translateX(50%);
   filter: blur(60px);
   animation: rotate infinite linear;
+}
+select:focus {
+  border: none;
+  box-shadow: none;
 }
 @media screen and (max-width: 900px) {
   .media_image_container {

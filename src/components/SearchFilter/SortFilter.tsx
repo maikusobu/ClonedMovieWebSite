@@ -1,4 +1,3 @@
-
 import { genreSelector } from "../HomePage/SliceApi/SliceApi";
 import { useAppDispatch, useAppSelector } from "../../App/hooks";
 import { useEffect, useState } from "react";
@@ -17,9 +16,14 @@ type sortFilter = {
   setMovieId: (movieId: movieidType) => void;
   valueUserVote: number[];
   setValueUserVote: (valueUserVote: number[]) => void;
-}
-function SortFilter({ movieId, setMovieId, valueUserVote, setValueUserVote } : sortFilter) {
-const data = useAppSelector( genreSelector);
+};
+function SortFilter({
+  movieId,
+  setMovieId,
+  valueUserVote,
+  setValueUserVote,
+}: sortFilter) {
+  const data = useAppSelector(genreSelector);
   const [valueSort, setValueSort] = useState("Popularity Descending");
   const dispatch = useAppDispatch();
 
@@ -51,12 +55,11 @@ const data = useAppSelector( genreSelector);
 
         <label
           htmlFor="Sort"
-          className="dark:text-whit mb-2 block p-4 text-sm font-medium"
+          className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
         >
           Sorted based on the results
         </label>
         <select
-          defaultValue={valueSort}
           onChange={(e) => {
             setMovieId({
               ...movieId,
@@ -64,7 +67,7 @@ const data = useAppSelector( genreSelector);
             });
           }}
           id="Sort"
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          className="block w-full rounded-lg border border-gray-300 bg-transparent bg-gray-50 p-2.5 px-4 py-2.5 text-sm  text-gray-900 focus:border-none  focus:shadow-none focus:outline-none  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-none "
         >
           <option value="popularity.desc">Popularity Descending</option>
           <option value="popularity.asc">Popularity Ascending</option>
@@ -75,9 +78,7 @@ const data = useAppSelector( genreSelector);
 
       <details className="group  overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
         <summary className="flex cursor-pointer items-center justify-between gap-2 p-4 transition">
-          <span className="text-sm font-medium">
-            Filter by Genres (Only supported 1 genre at a time)
-          </span>
+          <span className="text-sm font-medium">Filter by Genres</span>
 
           <span className="transition group-open:-rotate-180">
             <svg
@@ -101,16 +102,13 @@ const data = useAppSelector( genreSelector);
             {data.map((genre) => (
               <ListGenres
                 key={genre.id}
-                id={genre.id}
+                genre_id={genre.id}
                 name={genre.name}
                 movieId={movieId}
                 setMovieId={(movieId) => setMovieId(movieId)}
               />
             ))}
           </ul>
-          {/* <div id="date-picker">
-            <DatePicker />
-          </div> */}
         </div>
       </details>
       <details className=" group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">

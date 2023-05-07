@@ -1,9 +1,12 @@
-
 import { MovieType } from "../../../Type/MovieType";
 export type TopBillCastType = {
-  topCast: (MovieType & {profile_path:string, character:string, popularity: number})[];
-}
-function TopBillCast({ topCast } : TopBillCastType) {
+  topCast: (MovieType & {
+    profile_path: string;
+    character: string;
+    popularity: number;
+  })[];
+};
+function TopBillCast({ topCast }: TopBillCastType) {
   return (
     <>
       <div
@@ -26,7 +29,9 @@ function TopBillCast({ topCast } : TopBillCastType) {
                 <h1 className=" font-medium text-white">{cast.name}</h1>
                 <div className="w-full">
                   <img
-                    src={`${import.meta.env.VITE_URL_IMAGE}${cast.profile_path}`}
+                    src={`${import.meta.env.VITE_URL_IMAGE}${
+                      cast.profile_path
+                    }`}
                     className="w-[100%] rounded-lg "
                   />
                 </div>

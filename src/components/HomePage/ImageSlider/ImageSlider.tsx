@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { IconContext} from "react-icons";
+import { IconContext } from "react-icons";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import "./ImageSlider.css";
@@ -11,16 +11,16 @@ import { useReleaseDay } from "../../../useReleaseDay/useReleaseDay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MovieType } from "../../../Type/MovieType";
 type ImageSliderType = {
-  dataToprated: MovieType[],
-  isLoading: boolean,
-}
-export function ImageSlider({ dataToprated, isLoading } : ImageSliderType) {
+  dataToprated: MovieType[];
+  isLoading: boolean;
+};
+export function ImageSlider({ dataToprated, isLoading }: ImageSliderType) {
   let dataDate: string = "";
   const [index, setIndex] = useState(0);
   const [num, setNum] = useState(0);
   const navigate = useNavigate();
   const imgSlide = useRef<ReturnType<typeof setInterval> | null>(null);
-  const handleChange = (index : number) => {
+  const handleChange = (index: number) => {
     setIndex(index);
     setNum(index);
   };
@@ -37,8 +37,7 @@ export function ImageSlider({ dataToprated, isLoading } : ImageSliderType) {
       });
     }, 4000);
     return () => {
-      if (imgSlide.current !== null)
-      clearInterval(imgSlide.current);
+      if (imgSlide.current !== null) clearInterval(imgSlide.current);
     };
   }, [num, index]);
 
@@ -47,7 +46,7 @@ export function ImageSlider({ dataToprated, isLoading } : ImageSliderType) {
     dataDate = useReleaseDay(movie);
   }
   if (isLoading) return <h1 className="text-white">Loading</h1>;
-  else 
+  else
     return (
       <div className=" media_width flex gap-2 px-10  ">
         <div
@@ -80,7 +79,6 @@ export function ImageSlider({ dataToprated, isLoading } : ImageSliderType) {
                     fontSize: "40px",
                     fontWeight: "500",
                   },
-              
                 }}
               />
               ;
@@ -89,8 +87,10 @@ export function ImageSlider({ dataToprated, isLoading } : ImageSliderType) {
           <div>
             <img
               key={dataToprated[index]?.title}
-              className="media_img_width aspect-[3/4] shadow-lg"
-              src={`${import.meta.env.VITE_URL_IMAGE}${dataToprated[index]?.poster_path}`}
+              className="media_img_width aspect-[3/4] rounded-md shadow-lg"
+              src={`${import.meta.env.VITE_URL_IMAGE}${
+                dataToprated[index]?.poster_path
+              }`}
               width="250"
               alt={dataToprated[index]?.title}
             />
@@ -145,12 +145,10 @@ export function ImageSlider({ dataToprated, isLoading } : ImageSliderType) {
           </div>
           <div className="icon_mobile">
             <IconContext.Provider
-             
               value={{ className: "", size: "2rem", color: "#dc2430" }}
-             
             >
               <FaPlayCircle
-                 className="cursor-pointer"
+                className="cursor-pointer"
                 onClick={() => {
                   navigate(`play/movie/${dataToprated[index]?.id}`);
                 }}

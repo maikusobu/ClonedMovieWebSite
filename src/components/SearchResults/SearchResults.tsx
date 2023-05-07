@@ -5,7 +5,7 @@ import { faArrowRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import MovieSearch from "./MovieSearch";
 import { LoaderData } from "../../Type/loaderType";
 
-export const loader = async ({ params }: { params: any } ) => {
+export const loader = async ({ params }: { params: any }) => {
   const { keyId } = params;
 
   const movies = await getTheMovie(keyId);

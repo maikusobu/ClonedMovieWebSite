@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createAsyncThunk, Middleware } from "@reduxjs/toolkit";
 import { RootState } from "../../../App/store";
-const apikey = import.meta.env.VITE_TMBD_API_KEY ;
+const apikey = import.meta.env.VITE_TMBD_API_KEY;
 type state = {
   data: unknown[];
   dataKey: unknown[];
   status: string;
   statusKey: string;
-  error: string; 
-}
+  error: string;
+};
 const initialState: state = {
   data: [],
   dataKey: [],
@@ -21,25 +21,26 @@ export const getLatestMovie = createAsyncThunk(
   async () => {
     const data = await fetch(
       `
-      https://api.themoviedb.org/3/movie/upcoming?api_key=${apikey }&language=en-US&page=1`
+      https://api.themoviedb.org/3/movie/upcoming?api_key=${apikey}&language=en-US&page=1`
     );
     return data.json();
   }
 );
-export const delayFulfilleLatestdMiddleware: Middleware = (store) => (next) => (action) => {
-  if (action.type === getLatestMovie.fulfilled.toString()) {
-    setTimeout(() => {
-    next(action);
-    }, 0);
-  } else {
-    next(action);
-  }
-};
+export const delayFulfilleLatestdMiddleware: Middleware =
+  (store) => (next) => (action) => {
+    if (action.type === getLatestMovie.fulfilled.toString()) {
+      setTimeout(() => {
+        next(action);
+      }, 700);
+    } else {
+      next(action);
+    }
+  };
 export const getTrailer = createAsyncThunk(
   "latest/getTrailer",
   async (movie_id) => {
     const data = await fetch(`
-  https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${apikey }&language=en-US`);
+  https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${apikey}&language=en-US`);
     return data.json();
   }
 );
@@ -72,7 +73,8 @@ const latestSlice = createSlice({
   },
 });
 export default latestSlice.reducer;
-export const latestData = (state : RootState) => state.latestReducer.data;
-export const trailerData = (state : RootState) => state.latestReducer.dataKey;
-export const trailerStatus = (state : RootState) => state.latestReducer.statusKey;
-export const latestStatus = (state : RootState) => state.latestReducer.status;
+export const latestData = (state: RootState) => state.latestReducer.data;
+export const trailerData = (state: RootState) => state.latestReducer.dataKey;
+export const trailerStatus = (state: RootState) =>
+  state.latestReducer.statusKey;
+export const latestStatus = (state: RootState) => state.latestReducer.status;

@@ -19,9 +19,7 @@ import Layout from "./components/HomePage/Layout/Layout";
 const router = createBrowserRouter([
   {
     path: "/",
-    element:
-      <Layout/>
-,
+    element: <Layout />,
     loader: NavbarLoader,
     errorElement: <ErrorPage />,
     children: [

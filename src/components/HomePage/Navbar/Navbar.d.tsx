@@ -1,1 +1,1 @@
-declare module "Navbar"
+declare module "Navbar";

@@ -1,10 +1,15 @@
-import ReactLoading from 'react-loading';
+import ReactLoading from "react-loading";
 function LoadingPage() {
-    return (
-        <div className=' h-[400px] flex justify-center items-center bg-slate-900'>
-        <ReactLoading
-                type="spokes" height={'4%'} width={'4%'} color="#fff"></ReactLoading>
-            </div>);
+  return (
+    <div className=" flex h-[400px] items-center justify-center bg-slate-900">
+      <ReactLoading
+        type="spokes"
+        height={"4%"}
+        width={"4%"}
+        color="#fff"
+      ></ReactLoading>
+    </div>
+  );
 }
 
 export default LoadingPage;
