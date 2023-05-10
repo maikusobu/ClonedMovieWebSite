@@ -32,7 +32,8 @@ function TopBillCast({ topCast }: TopBillCastType) {
                     src={`${import.meta.env.VITE_URL_IMAGE}${
                       cast.profile_path
                     }`}
-                    className="w-[100%] rounded-lg "
+                    width={270}
+                    className="w-[100%] max-w-[270px] rounded-lg "
                   />
                 </div>
                 <div>

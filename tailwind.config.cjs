@@ -7,13 +7,16 @@ module.exports = {
         100: "100%",
       },
       colors: {
-        red: "#dc2430",
-        yellow: "#FCD354",
-        purple: "#7b4397",
-        lightYellow: "#fcd354",
+        red: "var(--red)",
+        yellow: "var(--yellow)",
+        purple: "var(--purple)",
+        lightYellow: "var(--lightYellow)",
       },
       screens: {
         ipad: "801px",
+      },
+      height: {
+        bg: "var(--widthcalculate)",
       },
     },
   },

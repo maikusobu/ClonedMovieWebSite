@@ -6,11 +6,13 @@ import thunk from "redux-thunk";
 import { applyMiddleware } from "@reduxjs/toolkit";
 import { delayFulfilledMiddleware } from "../components/HomePage/SliceApi/SliceApiTrending";
 import { delayFulfilleLatestdMiddleware } from "../components/HomePage/SliceApi/SliceApiLatest";
+import reviewSlice from "../components/HomePage/SliceApi/SliceReview";
 export const store = configureStore({
   reducer: {
     genreReducer: genreSlice,
     trendReducer: trendSlice,
     latestReducer: latestSlice,
+    reviewReducer: reviewSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()

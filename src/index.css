@@ -4,7 +4,11 @@
 
 @layer base {
   :root {
-    --my-color: #336600;
+    --red: #dc2430;
+    --yellow: "#FCD354",
+    --purple: "#7b4397",
+    --lightYellow: "#fcd354",
+    --widthcalculate: clamp(500px, calc(32.32vw + 200px), 600px);
   }
 }
 
@@ -59,6 +63,19 @@ p {
   animation: rotate 8s infinite;
   animation-timing-function: ease-in;
 }
+@keyframes move {
+
+ 0% {
+     transform: translateX(-20px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+.moveRight {
+  animation: move 0.5s ease-in forwards !important;
+}
+
 @keyframes rotate {
   0% {
     rotate: 0deg;

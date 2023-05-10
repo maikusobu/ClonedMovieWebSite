@@ -4,6 +4,8 @@ import MovieData from "./MovieData/MovieData";
 import { useLoaderData } from "react-router-dom";
 import { getTheMovie } from "../HomePage/Navbar/Helper";
 import { LoaderData } from "../../Type/loaderType";
+import { useEffect } from "react";
+
 export const loader = async ({
   params,
   request,
@@ -38,7 +40,7 @@ export const loader = async ({
 };
 function MovieDescription() {
   const data = useLoaderData() as LoaderData<typeof loader>;
-
+  useEffect(() => {}, []);
   return (
     <div className="  overflow-hidden bg-slate-900">
       <MovieData

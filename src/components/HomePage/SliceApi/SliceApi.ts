@@ -5,6 +5,7 @@ import { RootState } from "../../../App/store";
 import { movieidType } from "../../SearchFilter/SearchFilterContainer";
 const apikey = import.meta.env.VITE_TMBD_API_KEY;
 
+
 type SliceApiProp = {
   data: MovieType[];
   status: string;
