@@ -16,7 +16,7 @@ function TopBillCast({ topCast }: TopBillCastType) {
         <div className="circle-spin absolute top-1/2 right-1/2 h-[100px] w-[100px]  rounded-full bg-gradient-to-r from-red to-purple"></div>
         <div className="text-2xl font-bold text-yellow">Hot cast</div>
         <div
-          className="flex flex-nowrap  gap-4 overflow-x-scroll border  border-[10px] border-[rgb(133,_137,_148)] p-4   "
+          className="flex flex-nowrap  gap-4 overflow-x-scroll  border-[10px] border-[rgb(133,_137,_148)] p-4   "
           id="list_content"
         >
           {topCast

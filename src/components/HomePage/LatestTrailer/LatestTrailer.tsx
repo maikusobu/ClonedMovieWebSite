@@ -3,7 +3,6 @@ import { latestStatus } from "../SliceApi/SliceApiLatest";
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
 import { FaPlayCircle } from "react-icons/fa";
 
-import { motion } from "framer-motion";
 import { IconContext } from "react-icons";
 import { Link } from "react-router-dom";
 import { MovieType } from "../../../Type/MovieType";
@@ -28,7 +27,7 @@ export function LatestTrailer() {
         </div>
         <div
           id="list_content"
-          className="flex flex-nowrap gap-4 overflow-x-scroll rounded-[10px] border border-[10px]  border-[rgb(133,_137,_148)] p-4 md:gap-10"
+          className="flex flex-nowrap gap-4 overflow-x-scroll rounded-[10px]  border-[10px]  border-[rgb(133,_137,_148)] p-4 md:gap-10"
         >
           {movies.map((movie) => {
             return (
@@ -37,7 +36,7 @@ export function LatestTrailer() {
                 className="basis-200 relative block shrink-0 grow-0"
                 to={`play/movie/${movie.id}`}
               >
-                <motion.div whileHover={{ scale: "1.1" }} className="h-full">
+                <div className="h-full hover:scale-110">
                   <IconContext.Provider
                     value={{
                       className:
@@ -59,7 +58,7 @@ export function LatestTrailer() {
                       height="200"
                     />
                   </div>
-                </motion.div>
+                </div>
               </Link>
             );
           })}

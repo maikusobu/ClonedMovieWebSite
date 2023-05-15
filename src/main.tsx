@@ -16,6 +16,7 @@ import ErrorPage from "./components/ErrorsPage/ErrorPage";
 import SearchResults from "./components/SearchResults/SearchResults";
 import { loader as SearchResultsLoader } from "./components/SearchResults/SearchResults";
 import Layout from "./components/HomePage/Layout/Layout";
+import Login from "./components/Authenticate/Login";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -48,6 +49,11 @@ const router = createBrowserRouter([
     element: <SearchResults />,
     errorElement: <ErrorPage />,
     loader: SearchResultsLoader,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    errorElement: <ErrorPage />,
   },
 ]);
 

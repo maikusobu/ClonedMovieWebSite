@@ -2,12 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/lgo.svg" sizes="any" />
+    <meta name="keywords" content="Movie" />
+    <meta name="description" content="Website for searching movie" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <meta name="author" content="Nguyen Tan Loi" />
+    <link rel="icon" type="image/svg+xml" href="/lgo.svg" sizes="any" />
+    <link rel="preconnect" href="https://api.themoviedb.org" />
+    <link rel="preconnect" href="https://image.tmdb.org" />
     <title>FrontSide-MovieDatabase</title>
   </head>
   <body>
+    <input type="hidden" id="session_id" />
     <main id="root"></main>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -11,15 +11,19 @@ import { useLoaderData } from "react-router-dom";
 import { getTheMovie } from "../Navbar/Helper";
 import { getLatestMovie } from "../SliceApi/SliceApiLatest";
 import { LoaderData } from "../../../Type/loaderType";
+import { ScrollRestoration } from "react-router-dom";
+
 import { latestStatus } from "../SliceApi/SliceApiLatest";
 import LoadingAnimationPage from "../LoadingAnimationPage/LoadingAnimationPage";
 import Footer from "../Footer/Footer";
-
 export async function loader({ request }: { request: Request }) {
   const url = new URL(request.url);
   const q = url.searchParams.get("search");
   if (!q) {
-    return {};
+    return {
+      movies: [],
+      q: "",
+    };
   }
   const movies = await getTheMovie(q);
   return { movies, q };
@@ -30,7 +34,6 @@ const Layout = (): JSX.Element => {
   const [scrollPos, setScrollPos] = useState(
     Number(localStorage.getItem("scroll"))
   );
-
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [dataToprated, setDataToprated] = useState([]);
@@ -92,26 +95,6 @@ const Layout = (): JSX.Element => {
           <div className=" image_responsive mx-20  h-[600px] ">
             <SlideMovive />
           </div>
-
-          {/* <CateogySelect
-        genre={genre}
-        genreId={genreId}
-        handleChangeId={handleChangeId}
-        setCurrentPage={setCurrentPage}
-      /> */}
-          {/* <Pagination
-        className="pagination-bar"
-        currentPage={currentPage}
-        totalCount={data.total_results / 100}
-        pageSize={PageSize}
-        inputText={inputText}
-        genreId={genreId}
-        handleSubmit={handleSubmit}
-        setInputText={setInputText}
-        onPageChange={(page) => {
-          handleSetPage(page);
-        }}
-      /> */}
           <div className=" trailer_mobile image_responsive mx-20 flex h-[300px] flex-col gap-4 lg:h-[400px]">
             <LatestTrailer />
           </div>
@@ -119,6 +102,11 @@ const Layout = (): JSX.Element => {
             <Footer />
           </div>
         </div>
+        <ScrollRestoration
+          getKey={(location, matches) => {
+            return location.pathname;
+          }}
+        />
       </>
     );
   else return <>{createPortal(<LoadingAnimationPage />, document.body)}</>;

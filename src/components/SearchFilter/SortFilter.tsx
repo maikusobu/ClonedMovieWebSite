@@ -32,7 +32,7 @@ function SortFilter({
   }, []);
   return (
     <div className="space-y-2 p-4 text-white">
-      <details className=" group overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+      <details className=" group overflow-hidden rounded border [&_summary::-webkit-details-marker]:hidden">
         <summary className="flex cursor-pointer items-center justify-between gap-2 p-4 transition">
           <span className="text-sm font-medium">Sort</span>
           <span className="transition group-open:-rotate-180">
@@ -52,28 +52,29 @@ function SortFilter({
             </svg>
           </span>
         </summary>
-
-        <label
-          htmlFor="Sort"
-          className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Sorted based on the results
-        </label>
-        <select
-          onChange={(e) => {
-            setMovieId({
-              ...movieId,
-              sort: e.target.value,
-            });
-          }}
-          id="Sort"
-          className="block w-full rounded-lg border border-gray-300 bg-transparent bg-gray-50 p-2.5 px-4 py-2.5 text-sm  text-gray-900 focus:border-none  focus:shadow-none focus:outline-none  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-none "
-        >
-          <option value="popularity.desc">Popularity Descending</option>
-          <option value="popularity.asc">Popularity Ascending</option>
-          <option value="vote_average.desc">Rating Descending</option>
-          <option value="vote_average.asc">Rating ascending</option>
-        </select>
+        <div className="p-1">
+          <select
+            onChange={(e) => {
+              setMovieId({
+                ...movieId,
+                sort: e.target.value,
+              });
+            }}
+            id="Sort"
+            className="  dark:focus:border-red-500 !dark:focus:ring-orange-500 block  w-full rounded-lg  p-2.5  px-4
+            py-2.5 text-sm text-gray-900 focus:border-yellow 
+            focus:outline-none
+            focus:ring-yellow
+            dark:border-gray-600
+            dark:bg-slate-900 dark:text-white dark:placeholder-gray-400
+            "
+          >
+            <option value="popularity.desc">Popularity Descending</option>
+            <option value="popularity.asc">Popularity Ascending</option>
+            <option value="vote_average.desc">Rating Descending</option>
+            <option value="vote_average.asc">Rating ascending</option>
+          </select>
+        </div>
       </details>
 
       <details className="group  overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">

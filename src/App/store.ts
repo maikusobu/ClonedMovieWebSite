@@ -7,12 +7,14 @@ import { applyMiddleware } from "@reduxjs/toolkit";
 import { delayFulfilledMiddleware } from "../components/HomePage/SliceApi/SliceApiTrending";
 import { delayFulfilleLatestdMiddleware } from "../components/HomePage/SliceApi/SliceApiLatest";
 import reviewSlice from "../components/HomePage/SliceApi/SliceReview";
+import recommendSlice from "../components/HomePage/SliceApi/SliceRecommend";
 export const store = configureStore({
   reducer: {
     genreReducer: genreSlice,
     trendReducer: trendSlice,
     latestReducer: latestSlice,
     reviewReducer: reviewSlice,
+    recommendReducer: recommendSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()

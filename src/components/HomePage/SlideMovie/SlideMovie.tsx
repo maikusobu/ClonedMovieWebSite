@@ -72,6 +72,7 @@ export function SlideMovive() {
           </div>
         </button>
         <select
+          id="selectTrending"
           className="chose_select ipad:hidden"
           defaultValue={options[0].value}
           onChange={(e) => {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 type colorType = {
   imageUrl: string;
   color: string;
@@ -39,17 +39,13 @@ const ImageColorExtractor = ({
             canvas.width,
             canvas.height
           ).data;
-
           const color = getDominantColor(imageData);
           const colorRbga = [...color];
-
           colorRbga.push(0.5);
-
           const luminace =
             0.299 * color[0] + 0.587 * color[1] + 0.114 * color[2];
           if (luminace > 166) setTextColor("black");
           else setTextColor("white");
-
           setColor(`rgb(${color.join(", ")})`);
           setRgba(`rgba(${colorRbga.join(", ")})`);
         }
@@ -83,7 +79,7 @@ const ImageColorExtractor = ({
 
       {color && (
         <div
-          className={`${
+          className={` relative z-20 ${
             textColor === "black" ? "text-gray-800" : "text-slate-100"
           }`}
           style={{ backgroundColor: color }}

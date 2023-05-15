@@ -30,12 +30,12 @@
   font-weight: 500;
   border: none;
 }
-select:focus {
+#selectTrending:focus {
   outline: none;
   border-color: #dc2430;
   box-shadow: 0 0 0 2px #dc2430;
 }
-select {
+#selectTrending {
   --tw-shadow: 0 0 red;
 }
 

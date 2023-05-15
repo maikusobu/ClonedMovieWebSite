@@ -5,7 +5,7 @@ import { useLoaderData } from "react-router-dom";
 import { getTheMovie } from "../HomePage/Navbar/Helper";
 import { LoaderData } from "../../Type/loaderType";
 import { useEffect } from "react";
-
+import Footer from "../HomePage/Footer/Footer";
 export const loader = async ({
   params,
   request,
@@ -49,6 +49,7 @@ function MovieDescription() {
         q={data.q ? data.q : ""}
         movies={data.movies!}
       />
+      <Footer />
     </div>
   );
 }

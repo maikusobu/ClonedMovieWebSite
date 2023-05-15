@@ -4,7 +4,6 @@ import {
   PopularStatus,
 } from "../../HomePage/SliceApi/SliceApi";
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
-import { MovieType } from "../../../Type/MovieType";
 import { useEffect, useState } from "react";
 import Movie from "./Movie";
 import { movieidType } from "../SearchFilterContainer";

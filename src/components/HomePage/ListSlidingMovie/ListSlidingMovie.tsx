@@ -7,6 +7,7 @@ import { getTrendingMovie } from "../SliceApi/SliceApiTrending";
 import { MovieType } from "../../../Type/MovieType";
 import { memo } from "react";
 import { useReleaseDay } from "../../../useReleaseDay/useReleaseDay";
+import CircularBar from "../../CirculaBar/CircularBar";
 let movies: MovieType[] = [];
 const dummy = new Array(20).fill(undefined);
 export const ListSlidingMovie: FunctionComponent<{}> = memo(
@@ -61,13 +62,19 @@ export const ListSlidingMovie: FunctionComponent<{}> = memo(
                     height="300"
                   />
                 </Link>
-                <div className=" max-sm-prose  w-[200px] text-white">
-                  <h1>{movie.title}</h1>
-                  <div className="flex gap-5">
-                    <div>{Math.round(movie.vote_average)}</div>
-                    <div className="text-white">
-                      {`${useReleaseDay(movie)} 
+                <div className="   w-[200px] text-white">
+                  <div className="flex items-center justify-between">
+                    <div className="flex flex-col">
+                      <h1 className="max-w-[26ch] text-lg font-bold">
+                        {movie.title}
+                      </h1>
+                      <div className="text-white">
+                        {`${useReleaseDay(movie)} 
                     `}
+                      </div>
+                    </div>
+                    <div className="aspect-square h-[35px] w-[35px] self-start rounded-full bg-black p-1">
+                      <CircularBar vote={movie?.vote_average} />
                     </div>
                   </div>
                 </div>

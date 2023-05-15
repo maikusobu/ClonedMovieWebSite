@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { IconContext } from "react-icons";
-import { CircularProgressbar } from "react-circular-progressbar";
+import CircularBar from "../../CirculaBar/CircularBar";
 import "react-circular-progressbar/dist/styles.css";
 import "./ImageSlider.css";
 import { FaPlayCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import { useReleaseDay } from "../../../useReleaseDay/useReleaseDay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MovieType } from "../../../Type/MovieType";
@@ -55,45 +56,22 @@ export function ImageSlider({ dataToprated, isLoading }: ImageSliderType) {
           data-index={index}
         >
           <div className="absolute top-0 translate-y-[-50%] translate-x-[50%]  rounded-full">
-            <div className="media_circle_progress h-[30px] w-[30px] rounded-full bg-black ">
-              <CircularProgressbar
-                value={dataToprated[index]?.vote_average * 10 || 100}
-                text={`${dataToprated[index]?.vote_average || 100}`}
-                strokeWidth={12}
-                styles={{
-                  root: {},
-                  path: {
-                    stroke: `${
-                      dataToprated[index]?.vote_average * 10 >= 70
-                        ? "#dc2430"
-                        : "#7b4397"
-                    }`,
-                    strokeLinecap: "butt",
-                    transition: "stroke-dashoffset 0.5s ease 0s",
-                  },
-                  trail: {
-                    stroke: "#d6d6d6",
-                  },
-                  text: {
-                    fill: " #FCD354",
-                    fontSize: "40px",
-                    fontWeight: "500",
-                  },
-                }}
-              />
-              ;
+            <div className="media_circle_progress h-[35px] w-[35px] rounded-full bg-black p-1 ">
+              <CircularBar vote={dataToprated[index]?.vote_average} />
             </div>
           </div>
           <div>
-            <img
-              key={dataToprated[index]?.title}
-              className="media_img_width aspect-[3/4] rounded-md shadow-lg"
-              src={`${import.meta.env.VITE_URL_IMAGE}${
-                dataToprated[index]?.poster_path
-              }`}
-              width="250"
-              alt={dataToprated[index]?.title}
-            />
+            <Link to={`/description/movie/${dataToprated[index]?.id}`}>
+              <img
+                key={dataToprated[index]?.title}
+                className="media_img_width aspect-[3/4] rounded-md shadow-lg"
+                src={`${import.meta.env.VITE_URL_IMAGE}${
+                  dataToprated[index]?.poster_path
+                }`}
+                width="250"
+                alt={dataToprated[index]?.title}
+              />
+            </Link>
           </div>
           <div className=" media_dot mt-2 flex w-1/2 justify-center">
             {dataToprated.slice(0, 5).map((movie, i) => (

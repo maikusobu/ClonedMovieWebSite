@@ -41,11 +41,10 @@ export function VideoPlay() {
           height="500"
           src={`https://www.youtube.com/embed/${data.results[1]?.key}`}
           title="Video clip"
-          frameBorder="2"
-          className="  mx-auto h-[50%] w-[80%] border-8 md:h-[80%]"
+          className=" mx-auto h-[50%] w-[80%] border-8 md:h-[80%]"
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
-          allowFullScreen={true}
+          allowFullScreen={false}
         ></iframe>
       </div>
     </div>

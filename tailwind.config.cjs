@@ -11,6 +11,7 @@ module.exports = {
         yellow: "var(--yellow)",
         purple: "var(--purple)",
         lightYellow: "var(--lightYellow)",
+        borderColor: "var(--bordr-color)",
       },
       screens: {
         ipad: "801px",

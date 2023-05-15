@@ -1,12 +1,12 @@
 import { useRef, useEffect, lazy } from "react";
 import { useState } from "react";
 import { Navbar } from "../../HomePage/Navbar/Navbar";
-import { CircularProgressbar } from "react-circular-progressbar";
+import useScreen from "../../useScreen/useScreen";
 import TopBillCast from "../TopBillCast/TopBillCast";
 import { MovieType } from "../../../Type/MovieType";
 import { useReleaseDay } from "../../../useReleaseDay/useReleaseDay";
 import { Suspense } from "react";
-import LoadingPage from "../../LoadingPage/LoadingPage";
+import CircularBar from "../../CirculaBar/CircularBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
@@ -15,8 +15,10 @@ import { selectReview } from "../../HomePage/SliceApi/SliceReview";
 import Review from "../Review/Review";
 import Production from "../Production/Production";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
+import LoadingAnimationPage from "../../HomePage/LoadingAnimationPage/LoadingAnimationPage";
+import { useLocation } from "react-router-dom";
+import Recommendation from "../Recommendation/Recommendation";
 const ImageColorExtractor = lazy(() => import("../../GetColor/ColorExtractor"));
-
 let dollarUS = Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
@@ -50,15 +52,16 @@ type MovieDataType = {
 function MovieData({ data, dataImage, q, movies }: MovieDataType) {
   const imgRef = useRef<HTMLImageElement>(null);
   const topCast = dataImage.cast.sort((a, b) => b.popularity - a.popularity);
+  const divRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const reviewData = useAppSelector(selectReview);
   const [nav, setNav] = useState(false);
-  const [search, setSearch] = useState(false);
   const [color, setColor] = useState("");
   const [rgba, setRgba] = useState("");
   const [textColor, setTextColor] = useState("");
   const [imageLoaded, setImageLoaded] = useState(false);
-
+  const { width, height } = useScreen();
   const imgStyle = {
     backgroundImage: `linear-gradient(to right, ${color} 50%, transparent 90%)`,
   };
@@ -78,13 +81,19 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
     backgroundPosition: "left",
   };
   useEffect(() => {
+    if (divRef.current) {
+      window.scrollTo(0, 0);
+    }
+  }, [location]);
+  useEffect(() => {
     dispatch(getReview({ id: data.id }));
-  }, []);
-
+  }, [data, dataImage]);
+  console.log(textColor);
   return (
-    <Suspense fallback={<LoadingPage />}>
+    <Suspense fallback={<LoadingAnimationPage />}>
       <div
-        className=""
+        ref={divRef}
+        className="relative"
         onClick={() => {
           if (nav === true) {
             setNav(false);
@@ -127,28 +136,8 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
                 </h1>
               </div>
               <div className="my-2 flex justify-center">
-                <div className=" aspect-auto w-[15%]">
-                  <CircularProgressbar
-                    value={data?.vote_average * 10 || 100}
-                    text={`${data?.vote_average || 100}`}
-                    strokeWidth={12}
-                    styles={{
-                      root: {},
-                      path: {
-                        stroke: "#dc2430",
-                        strokeLinecap: "butt",
-                        transition: "stroke-dashoffset 0.5s ease 0s",
-                      },
-                      trail: {
-                        stroke: "#d6d6d6",
-                      },
-                      text: {
-                        fill: `${textColor}`,
-                        fontSize: "25px",
-                        fontWeight: "500",
-                      },
-                    }}
-                  />
+                <div className=" aspect-auto w-[15%] rounded-full bg-black">
+                  <CircularBar vote={data?.vote_average} />
                 </div>
               </div>
               <div className="flex flex-col items-center ">
@@ -194,13 +183,17 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
               </div>
             </div>
           </div>
-          <div className="hidden md:block">
+          <div className=" hidden md:block">
             <div className=" h-bg " style={bgimageStyle}>
               <div
                 className=" flex h-full w-full  gap-2 md:p-3 lg:py-20"
                 style={imgStyleMd}
               >
-                <div className=" w-1/4">
+                <div
+                  className={`${
+                    width > 980 ? "w-1/4" : width > 850 ? "w-1/3" : "w-1/2"
+                  }  `}
+                >
                   <img
                     src={`${import.meta.env.VITE_URL_IMAGE}${data.poster_path}`}
                     ref={imgRef}
@@ -226,39 +219,19 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
                         </div>
                       </div>
                       <div className="my-2 flex gap-5">
-                        <div className=" aspect-square  w-[6%] cursor-pointer self-center rounded-full bg-black hover:scale-110">
-                          <CircularProgressbar
-                            value={data?.vote_average * 10 || 100}
-                            text={`${data?.vote_average || 100}`}
-                            strokeWidth={8}
-                            styles={{
-                              root: {},
-                              path: {
-                                stroke: "#dc2430",
-                                strokeLinecap: "butt",
-                                transition: "stroke-dashoffset 0.5s ease 0s",
-                              },
-                              trail: {
-                                stroke: "#d6d6d6",
-                              },
-                              text: {
-                                fill: `white`,
-                                fontSize: "25px",
-                                fontWeight: "500",
-                              },
-                            }}
-                          />
+                        <div className=" aspect-square w-[6%] cursor-pointer self-center rounded-full bg-black p-1 ">
+                          <CircularBar vote={data?.vote_average} />
                         </div>
                         <div className="  font-medium text-inherit">
                           <div>{useReleaseDay(data)}</div>
-                          <div className=" group cursor-pointer space-x-2">
-                            <FontAwesomeIcon
-                              icon={faPlay}
-                              className="group-hover:text-rose-600/50"
-                            />
+                          <div className=" cursor-pointer space-x-2">
+                            <FontAwesomeIcon icon={faPlay} className="" />
                             <span
-                              className=" group-hover:text-rose-600/50
-                            "
+                              className={`${
+                                textColor === "white"
+                                  ? "hover:text-rose-600"
+                                  : "hover:text-amber-500"
+                              }  `}
                             >
                               Play trailer
                             </span>
@@ -285,46 +258,57 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
             </div>
           </div>
         </ImageColorExtractor>
-        <div className="flex">
-          <Review reviewData={reviewData} />
-          <div className=" relative z-10 w-[13%] bg-white p-3">
-            <div className=" flex flex-col text-lg text-inherit">
-              <h3 className=" font-bold">Status:</h3>
-              <div className="font-mono italic text-inherit">{data.status}</div>
-            </div>
-            <div className=" inline">
-              <div className=" flex flex-col">
-                <div className="text-inherit">
-                  <h3 className="font-bold text-inherit">Budget:</h3>
-                  {data.budget !== 0 ? dollarUS.format(data.budget) : "Unknown"}
-                </div>
-                <div className="text-inherit ">
-                  <h3 className="font-bold text-inherit">Revenue:</h3>
-                  {data.revenue !== 0
-                    ? dollarUS.format(data.revenue)
-                    : "Unknown"}
+        {imageLoaded && (
+          <div
+            className={`relative flex  border border-t-0  border-r-0 border-l-0 border-b-8 border-white from-orange-50/60 transition
+           duration-500 before:absolute before:inset-0 before:z-10
+            before:h-full before:w-[20px] before:rounded-r-lg before:bg-gradient-to-r  before:opacity-50 
+            `}
+          >
+            <Review reviewData={reviewData} />
+            <div className={`relative z-10  bg-white p-3 `}>
+              <div className=" flex flex-col text-lg text-inherit">
+                <h3 className=" font-bold">Status:</h3>
+                <div className="font-mono italic text-inherit">
+                  {data.status}
                 </div>
               </div>
-            </div>
-            <div className="text-inherit">
-              <h3 className="font-bold text-inherit">Production:</h3>
-              <Production
-                array={data.production_companies as productionCompanies[]}
-              />
-            </div>
-            <div>
-              <h3 className="font-bold">HomePage:</h3>
+              <div className=" inline">
+                <div className=" flex flex-col">
+                  <div className="text-inherit">
+                    <h3 className="font-bold text-inherit">Budget:</h3>
+                    {data.budget !== 0
+                      ? dollarUS.format(data.budget)
+                      : "Unknown"}
+                  </div>
+                  <div className="text-inherit ">
+                    <h3 className="font-bold text-inherit">Revenue:</h3>
+                    {data.revenue !== 0
+                      ? dollarUS.format(data.revenue)
+                      : "Unknown"}
+                  </div>
+                </div>
+              </div>
+              <div className="text-inherit">
+                <h3 className="font-bold text-inherit">Production:</h3>
+                <Production
+                  array={data.production_companies as productionCompanies[]}
+                />
+              </div>
               <div>
-                <a href={data.homepage} target="_blank">
-                  <FontAwesomeIcon icon={faLink} />
-                </a>
+                <h3 className="font-bold">HomePage:</h3>
+                <div className="pl-4">
+                  <a href={data.homepage} target="_blank" className="">
+                    <FontAwesomeIcon icon={faLink} />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         {imageLoaded && <TopBillCast topCast={topCast} />}
-        {/* <Media /> */}
+        {imageLoaded && <Recommendation id={data.id} />}
       </div>
     </Suspense>
   );

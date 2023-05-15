@@ -4,6 +4,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import Logo from "./lgo.svg";
 import User from "./user.svg";
 import Sort from "./sort.svg";
+import Tool from "./Setting.svg";
 import { Form } from "react-router-dom";
 import Menu from "./menu.svg";
 import { useEffect, useRef, useState } from "react";
@@ -14,17 +15,22 @@ import { useInView } from "react-intersection-observer";
 import DropDownMovie from "../DropDownMovie/DropDownMovie";
 import NavBarMobile from "./NavBarMobile/NavBarMobile";
 import { MovieType } from "../../../Type/MovieType";
-
+import { useLocation } from "react-router-dom";
+import { usePrevLocation } from "../../../usePrevLocation/usePrevLocation";
+let approved: string | null;
+let request_token_response: string | null;
 type NavbarProps = {
   movies: MovieType[];
   q: string;
 };
 let lastScrollTop = 0;
 let fixedNav = false;
+
 export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null!);
   const refDiv = useRef<HTMLDivElement>(null!);
   const inputFixRef = useRef<HTMLInputElement>(null!);
+  const settingRef = useRef<HTMLDivElement>(null!);
   const submit = useSubmit();
   const naigation = useNavigation();
   const navigate = useNavigate();
@@ -33,7 +39,10 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
   const [search, setSearch] = useState(false);
   const [isMouse, setIsMouse] = useState(false);
   const [scrollNavBar, setScrollNavBar] = useState(true);
-
+  const [isTyping, setIsTyping] = useState(false);
+  let location = useLocation();
+  let isFetch = false;
+  const { locationPath, setLocationPrev } = usePrevLocation();
   const { ref, inView, entry } = useInView({
     threshold: 0,
   });
@@ -56,6 +65,37 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
     };
   }, []);
   useEffect(() => {
+    const url = new URL(window.location.href);
+    approved = url.searchParams.get("approved");
+    request_token_response = url.searchParams.get("request_token");
+
+    if (approved === "true" && !isFetch) {
+      isFetch = true;
+      fetch(
+        `https://api.themoviedb.org/3/authentication/session/new?api_key=${
+          import.meta.env.VITE_TMBD_API_KEY
+        }`,
+        {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({ request_token: request_token_response }),
+        }
+      )
+        .then((json) => json.json())
+        .then((res) => console.log(res))
+        .catch((e) => console.log(e));
+    }
+    return () => {
+      isFetch = true;
+    };
+  }, []);
+  useEffect(() => {
+    setLocationPrev(location);
+  }, [location]);
+  useEffect(() => {
     inputRef.current.value = q;
     if (inputFixRef.current) {
       inputFixRef.current.value = q;
@@ -70,7 +110,7 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
         className=" relative z-50 flex  w-full items-center justify-around  "
       >
         <>
-          <div className="  flex  h-auto cursor-pointer items-center ">
+          <div className=" flex h-auto cursor-pointer items-center ">
             <div
               className=" aspect-square "
               onClick={() => {
@@ -99,12 +139,14 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
                     if (!isMouse) {
                       refDiv.current.style.setProperty("width", "100%");
                       setMovieDown(!movieDown);
+                      setIsTyping(true);
                     }
                   }}
                   onBlur={() => {
                     if (!isMouse) {
                       refDiv.current.style.setProperty("width", "50%");
                       setMovieDown(!movieDown);
+                      setIsMouse(false);
                     }
                   }}
                   className="focus:border-primary-600   focus:shadow-te-primary placeholder:text-red-300 dark:text-red-200 
@@ -129,7 +171,9 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
                   }}
                 />
                 <div className=" absolute top-0  right-0 translate-y-[30%] translate-x-[-50%] cursor-pointer transition ease-in-out">
-                  {naigation.state == "idle" ? (
+                  {naigation.state == "loading" && isTyping ? (
+                    <FontAwesomeIcon icon={faSpinner} spinPulse size="xl" />
+                  ) : (
                     <FontAwesomeIcon
                       icon={faMagnifyingGlass}
                       size="xl"
@@ -142,8 +186,6 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
                         e.preventDefault();
                       }}
                     />
-                  ) : (
-                    <FontAwesomeIcon icon={faSpinner} spinPulse size="xl" />
                   )}
                 </div>
                 {movieDown && inView && (
@@ -163,17 +205,49 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
             </Form>
           </div>
 
-          <div className="media_search  flex-0  items-center justify-center ">
-            <div className="relative flex items-center justify-center  gap-2">
+          <div className="media_search flex-0 group  relative   items-center justify-center">
+            <div
+              id="tooltip"
+              className=" cursor-pointer transition-all  duration-500 group-hover:rotate-180"
+              onMouseEnter={(e) => {
+                settingRef.current.style.setProperty("top", "120%");
+              }}
+              onMouseOut={(e) => {
+                settingRef.current.style.setProperty("top", "-250%");
+              }}
+            >
+              <img src={Tool} height={35} width={35} alt="tool"></img>
+            </div>
+            <div
+              className="  absolute top-[-250%] !z-[-999999999] flex w-[150%] translate-x-[-15%] flex-col items-center justify-center gap-2 rounded-lg bg-slate-800  transition-all duration-500 "
+              ref={settingRef}
+              onMouseEnter={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                settingRef.current.style.setProperty("top", "120%");
+              }}
+              onMouseLeave={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                settingRef.current.style.setProperty("top", "-250%");
+              }}
+            >
               <div
-                className=" cursor-pointer"
+                className=" relative flex w-full cursor-pointer justify-center duration-500 before:absolute before:top-0 before:left-0 before:z-[-1] before:h-full before:w-[0%] before:rounded-lg before:bg-slate-500  before:transition  before:content-[''] hover:before:w-full"
                 onClick={() => {
                   navigate("/nowplaying/search");
                 }}
+                onMouseEnter={(e) => e.preventDefault()}
               >
                 <img src={Sort} height={30} width={30} alt="sort"></img>
               </div>
-              <div>
+              <div
+                className=" relative flex w-full cursor-pointer justify-center duration-500 before:absolute before:top-0 before:left-0 before:z-[-1] before:h-full before:w-[0%] before:rounded-lg before:bg-slate-500  before:transition before:content-[''] hover:before:w-full"
+                onMouseEnter={(e) => e.preventDefault()}
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
                 <img src={User} height={30} width={30} alt="user"></img>
               </div>
             </div>
