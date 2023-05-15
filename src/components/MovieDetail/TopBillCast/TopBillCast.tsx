@@ -11,12 +11,12 @@ function TopBillCast({ topCast }: TopBillCastType) {
     <>
       <div
         id="credit"
-        className=" relative w-full bg-slate-900 px-4 py-4 text-xl"
+        className=" relative w-full bg-slate-900 py-4 text-xl md:px-4"
       >
         <div className="circle-spin absolute top-1/2 right-1/2 h-[100px] w-[100px]  rounded-full bg-gradient-to-r from-red to-purple"></div>
         <div className="text-2xl font-bold text-yellow">Hot cast</div>
         <div
-          className="flex flex-nowrap  gap-4 overflow-x-scroll  border-[10px] border-[rgb(133,_137,_148)] p-4   "
+          className="flex flex-nowrap  gap-2 overflow-x-scroll border-[10px] border-[rgb(133,_137,_148)]  px-2 md:gap-4 md:p-4   "
           id="list_content"
         >
           {topCast
@@ -24,9 +24,11 @@ function TopBillCast({ topCast }: TopBillCastType) {
             .map((cast) => (
               <div
                 key={cast.id}
-                className="  md:shrink-2 w-[80%] shrink-0 md:w-[20%]"
+                className="  md:shrink-2 w-[50%] shrink-0 md:w-[20%]"
               >
-                <h1 className=" font-medium text-white">{cast.name}</h1>
+                <h1 className=" text-base font-medium text-white lg:text-xl">
+                  {cast.name}
+                </h1>
                 <div className="w-full">
                   <img
                     src={`${import.meta.env.VITE_URL_IMAGE}${
@@ -38,7 +40,7 @@ function TopBillCast({ topCast }: TopBillCastType) {
                 </div>
                 <div>
                   <div className=" font-bold text-white">Act as</div>
-                  <div className="text-white">
+                  <div className="text-base text-white lg:text-xl">
                     {cast.character ? cast.character : "Unknown"}
                   </div>
                 </div>

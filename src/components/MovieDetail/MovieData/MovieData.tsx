@@ -18,6 +18,7 @@ import { faLink } from "@fortawesome/free-solid-svg-icons";
 import LoadingAnimationPage from "../../HomePage/LoadingAnimationPage/LoadingAnimationPage";
 import { useLocation } from "react-router-dom";
 import Recommendation from "../Recommendation/Recommendation";
+import ReviewTabletandMobile from "../Review/ReviewTabletandMobile";
 const ImageColorExtractor = lazy(() => import("../../GetColor/ColorExtractor"));
 let dollarUS = Intl.NumberFormat("en-US", {
   style: "currency",
@@ -155,12 +156,7 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
               <div className=" text-xl font-medium italic  text-inherit">
                 "{data.tagline}"
               </div>
-              <div className="prose prose-stone flex gap-5 text-lg text-inherit">
-                <div className="font-mono">Tình trạng:</div>
-                <div className="font-mono italic text-inherit">
-                  {data.status}
-                </div>
-              </div>
+
               <div className=" text-inherit md:max-w-[100%]">
                 <h3 className="text-2xl font-bold md:text-4xl">Overview</h3>
                 <p className=" max-w-prose font-serif text-xl leading-relaxed  md:text-2xl">
@@ -265,8 +261,9 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
             before:h-full before:w-[20px] before:rounded-r-lg before:bg-gradient-to-r  before:opacity-50 
             `}
           >
-            <Review reviewData={reviewData} />
-            <div className={`relative z-10  bg-white p-3 `}>
+            {width >= 950 && <Review reviewData={reviewData} />}
+            {width < 950 && <ReviewTabletandMobile reviewData={reviewData} />}
+            <div className={`relative z-10  w-1/3 bg-white p-3`}>
               <div className=" flex flex-col text-lg text-inherit">
                 <h3 className=" font-bold">Status:</h3>
                 <div className="font-mono italic text-inherit">
@@ -275,17 +272,21 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
               </div>
               <div className=" inline">
                 <div className=" flex flex-col">
-                  <div className="text-inherit">
-                    <h3 className="font-bold text-inherit">Budget:</h3>
-                    {data.budget !== 0
-                      ? dollarUS.format(data.budget)
-                      : "Unknown"}
+                  <div className="hidden text-inherit md:block">
+                    <h3 className=" font-bold text-inherit">Budget:</h3>
+                    <span>
+                      {data.budget !== 0
+                        ? dollarUS.format(data.budget)
+                        : "Unknown"}
+                    </span>
                   </div>
-                  <div className="text-inherit ">
+                  <div className="hidden text-inherit md:block">
                     <h3 className="font-bold text-inherit">Revenue:</h3>
-                    {data.revenue !== 0
-                      ? dollarUS.format(data.revenue)
-                      : "Unknown"}
+                    <span>
+                      {data.revenue !== 0
+                        ? dollarUS.format(data.revenue)
+                        : "Unknown"}
+                    </span>
                   </div>
                 </div>
               </div>

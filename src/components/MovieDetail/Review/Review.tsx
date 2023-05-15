@@ -3,7 +3,7 @@ import { extractUrl } from "../../../Helper/ExtractUrl";
 import { useRef, useEffect, useState } from "react";
 import useScreen from "../../useScreen/useScreen";
 import { set } from "date-fns";
-type Props = {
+export type Props = {
   reviewData: ReviewData[];
 };
 import { createPortal } from "react-dom";
@@ -15,7 +15,7 @@ function Review({ reviewData }: { reviewData: ReviewData[] }) {
   const [pageReview, setPageReview] = useState(false);
   const divContainerRed = useRef<HTMLDivElement>(null);
   const { width, height } = useScreen();
-  console.log(width, height);
+
   const handleNext = (prev: number) => {
     if (prev === 6) {
       return 0;
