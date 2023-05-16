@@ -6,15 +6,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import NotFound from "../../../assets/notfound.jpg";
+import { useLocation } from "react-router-dom";
 import useScreen from "../../useScreen/useScreen";
 
 import {
   selectRecommend,
   selectRecommendStatus,
 } from "../../HomePage/SliceApi/SliceRecommend";
+import { set } from "date-fns";
 
 function Recommendation({ id }: { id: number }) {
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const data = useAppSelector(selectRecommend);
   const status = useAppSelector(selectRecommendStatus);
   const [scrollState, setScrollState] = useState(0);
@@ -50,6 +53,10 @@ function Recommendation({ id }: { id: number }) {
   useEffect(() => {
     dispatch(fetchRecommend({ id: id }));
   }, [id]);
+  useEffect(() => {
+    flushSync(() => setScrollState(0));
+    handleScrollArrow();
+  }, [location]);
 
   if (status == "pending")
     return (
@@ -61,12 +68,17 @@ function Recommendation({ id }: { id: number }) {
   else if (status == "success")
     return (
       <>
-        <div className="flex flex-col-reverse justify-center md:mx-4 lg:flex-row">
+        <div className="flex flex-col-reverse justify-center gap-4 md:mx-4 lg:flex-row lg:gap-0">
           <div id="scroll_arrow" className=" w-full font-bold lg:w-1/4 ">
             <div className="text-center text-2xl text-yellow">
-              <h3>Movies you should watch!!</h3>
+              <h3>
+                Movies you should{" "}
+                <span className="opacity-1 animate-pulse rounded-xl bg-yellow p-1 text-red">
+                  watch!!!
+                </span>
+              </h3>
             </div>
-            <div className="flex items-center justify-center gap-5 text-3xl text-purple ">
+            <div className="flex cursor-pointer items-center justify-center gap-5 text-3xl text-purple">
               <div
                 onClick={() => handleMoveScroll(-1)}
                 className={scrollState <= 0 ? "disable" : ""}
@@ -84,12 +96,12 @@ function Recommendation({ id }: { id: number }) {
           <div
             className=" md:min-w[740px] flex min-h-[190px] min-w-full  max-w-[941px] flex-nowrap 
           gap-5 overflow-hidden overflow-y-hidden border-[10px] 
-          border-borderColor p-3 md:w-4/5 md:scroll-pl-2 md:pl-2 lg:min-w-[938px]"
+          border-borderColor p-3 md:w-4/5 md:scroll-pl-3 md:pl-2 lg:min-w-[938px] lg:scroll-pl-2"
           >
             {data?.map((item, i) => (
               <div
                 key={item.id}
-                className=" flex h-[80%] w-[100%] shrink-0 flex-col justify-between gap-4 md:min-w-[224px] lg:h-[32%] lg:w-[32%]"
+                className=" flex h-[80%] w-[100%] shrink-0 flex-col justify-between gap-4 md:w-[236px] md:min-w-[224px] lg:h-[32%] lg:w-[32%]"
                 ref={i === scrollState ? refScroll : null}
               >
                 <Link to={`/description/movie/${item.id}`}>
@@ -115,6 +127,9 @@ function Recommendation({ id }: { id: number }) {
                 </div>
               </div>
             ))}
+            {data.length === 0 && (
+              <div className="text-xl text-white">No data</div>
+            )}
           </div>
         </div>
       </>

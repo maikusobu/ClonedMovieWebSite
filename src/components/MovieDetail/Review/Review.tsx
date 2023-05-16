@@ -14,7 +14,6 @@ function Review({ reviewData }: { reviewData: ReviewData[] }) {
   const [pageNumber, setPageNUmber] = useState<number | null>(null);
   const [pageReview, setPageReview] = useState(false);
   const divContainerRed = useRef<HTMLDivElement>(null);
-  const { width, height } = useScreen();
 
   const handleNext = (prev: number) => {
     if (prev === 6) {
@@ -147,6 +146,7 @@ function Review({ reviewData }: { reviewData: ReviewData[] }) {
           </div>
         ))
         .slice(0, 4)}
+      {reviewData.length === 0 && "No Review"}
     </div>
   );
 }

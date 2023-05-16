@@ -6,9 +6,10 @@ import TopBillCast from "../TopBillCast/TopBillCast";
 import { MovieType } from "../../../Type/MovieType";
 import { useReleaseDay } from "../../../useReleaseDay/useReleaseDay";
 import { Suspense } from "react";
+import { Form } from "react-router-dom";
 import CircularBar from "../../CirculaBar/CircularBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faPen } from "@fortawesome/free-solid-svg-icons";
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
 import { getReview } from "../../HomePage/SliceApi/SliceReview";
 import { selectReview } from "../../HomePage/SliceApi/SliceReview";
@@ -20,6 +21,7 @@ import { useLocation } from "react-router-dom";
 import Recommendation from "../Recommendation/Recommendation";
 import ReviewTabletandMobile from "../Review/ReviewTabletandMobile";
 const ImageColorExtractor = lazy(() => import("../../GetColor/ColorExtractor"));
+import { postRate } from "../Helper/postRate";
 let dollarUS = Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
@@ -50,6 +52,16 @@ type MovieDataType = {
   q: string;
   movies: MovieType[];
 };
+export const action = async ({ request }: { request: Request }) => {
+  let formData = await request.formData();
+  let rateValue = formData.get("rateValue");
+  let id = formData.get("id");
+  console.log(rateValue, id);
+  if (typeof rateValue === "string" && typeof id === "string") {
+    postRate(rateValue, id);
+  }
+};
+
 function MovieData({ data, dataImage, q, movies }: MovieDataType) {
   const imgRef = useRef<HTMLImageElement>(null);
   const topCast = dataImage.cast.sort((a, b) => b.popularity - a.popularity);
@@ -58,6 +70,8 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
   const location = useLocation();
   const reviewData = useAppSelector(selectReview);
   const [nav, setNav] = useState(false);
+  const [valueRate, setValueRate] = useState<string>("");
+  const [rate, setRate] = useState(false);
   const [color, setColor] = useState("");
   const [rgba, setRgba] = useState("");
   const [textColor, setTextColor] = useState("");
@@ -81,6 +95,16 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
     backgroundSize: "cover",
     backgroundPosition: "left",
   };
+  const handleChangeRate = (value: string) => {
+    if (isNaN(Number(value))) {
+      alert("value should not be string");
+    } else {
+      if (0 <= Number(value) && Number(value) <= 10) setValueRate(value);
+      else {
+        alert("value should range from 0 to 10");
+      }
+    }
+  };
   useEffect(() => {
     if (divRef.current) {
       window.scrollTo(0, 0);
@@ -89,7 +113,7 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
   useEffect(() => {
     dispatch(getReview({ id: data.id }));
   }, [data, dataImage]);
-  console.log(textColor);
+
   return (
     <Suspense fallback={<LoadingAnimationPage />}>
       <div
@@ -182,24 +206,20 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
           <div className=" hidden md:block">
             <div className=" h-bg " style={bgimageStyle}>
               <div
-                className=" flex h-full w-full  gap-2 md:p-3 lg:py-20"
+                className=" lg:py-15  flex h-full  w-full gap-2 md:p-2 lg:px-6"
                 style={imgStyleMd}
               >
-                <div
-                  className={`${
-                    width > 980 ? "w-1/4" : width > 850 ? "w-1/3" : "w-1/2"
-                  }  `}
-                >
+                <div className={`${width > 800 ? "w-1/3" : "w-1/2"}`}>
                   <img
                     src={`${import.meta.env.VITE_URL_IMAGE}${data.poster_path}`}
                     ref={imgRef}
                     width={250}
-                    className="h-full w-auto rounded-xl"
+                    className="h-3/4 w-auto rounded-xl"
                   />
                 </div>
                 <div className=" h-full">
                   <div className=" h-full">
-                    <div className="space-y-5 px-4">
+                    <div className=" space-y-2 px-4  lg:space-y-5">
                       <div className="">
                         <h1 className=" font-extrabold text-inherit md:text-2xl lg:text-5xl">
                           {data.title}
@@ -215,7 +235,7 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
                         </div>
                       </div>
                       <div className="my-2 flex gap-5">
-                        <div className=" aspect-square w-[6%] cursor-pointer self-center rounded-full bg-black p-1 ">
+                        <div className=" aspect-square w-[8%] cursor-pointer self-center rounded-full bg-black p-1 lg:w-[6%] ">
                           <CircularBar vote={data?.vote_average} />
                         </div>
                         <div className="  font-medium text-inherit">
@@ -233,17 +253,63 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
                             </span>
                           </div>
                         </div>
+                        <div>
+                          <div>
+                            <h3
+                              className=" flex cursor-pointer font-semibold text-inherit hover:underline"
+                              onClick={() => {
+                                setRate(!rate);
+                              }}
+                            >
+                              Rate this movie
+                            </h3>
+                          </div>
+                          {!rate && (
+                            <div>
+                              <FontAwesomeIcon icon={faPen} />
+                            </div>
+                          )}
+                          {rate && (
+                            <Form
+                              className="absolute flex h-[35px] w-[150px] "
+                              method="post"
+                              action={`/description/movie/${data.id}`}
+                            >
+                              <input
+                                type="text"
+                                placeholder="Rate"
+                                className="w-full rounded-full pr-10 text-black "
+                                onChange={(e) =>
+                                  handleChangeRate(e.currentTarget.value)
+                                }
+                                value={valueRate}
+                                name="rateValue"
+                              ></input>
+                              <input
+                                type="hidden"
+                                value={`${data.id}`}
+                                name="id"
+                              />
+                              <button
+                                type="submit"
+                                className=" relative h-full w-[80px] translate-x-[-100%]  rounded-r-full  border-black text-black before:absolute before:top-0 before:left-0 before:h-full before:w-[2px] before:bg-black hover:bg-slate-700/80 hover:text-white "
+                              >
+                                Rate
+                              </button>
+                            </Form>
+                          )}
+                        </div>
                       </div>
 
                       <div className=" text-xl font-medium italic  text-inherit">
-                        "{data.tagline}"
+                        {`${data.tagline ? `"${data.tagline}"` : ""}`}
                       </div>
 
                       <div className=" text-inherit md:max-w-[100%]">
                         <h3 className="text-2xl font-bold md:text-4xl">
                           Overview
                         </h3>
-                        <p className=" max-w-prose text-ellipsis font-serif text-xl leading-relaxed md:text-xl  ">
+                        <p className=" max-w-prose text-ellipsis font-serif text-xl leading-relaxed md:text-xl xl:text-2xl ">
                           {data.overview}
                         </p>
                       </div>
@@ -256,14 +322,14 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
         </ImageColorExtractor>
         {imageLoaded && (
           <div
-            className={`relative flex  border border-t-0  border-r-0 border-l-0 border-b-8 border-white from-orange-50/60 transition
+            className={`relative flex overflow-hidden  border border-t-0  border-r-0 border-l-0 border-b-8 border-white from-orange-50/60 transition
            duration-500 before:absolute before:inset-0 before:z-10
             before:h-full before:w-[20px] before:rounded-r-lg before:bg-gradient-to-r  before:opacity-50 
             `}
           >
             {width >= 950 && <Review reviewData={reviewData} />}
             {width < 950 && <ReviewTabletandMobile reviewData={reviewData} />}
-            <div className={`relative z-10  w-1/3 bg-white p-3`}>
+            <div className={` relative z-10  w-1/5 bg-white p-3 lg:w-[14%]`}>
               <div className=" flex flex-col text-lg text-inherit">
                 <h3 className=" font-bold">Status:</h3>
                 <div className="font-mono italic text-inherit">

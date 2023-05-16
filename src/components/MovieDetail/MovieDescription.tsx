@@ -5,7 +5,13 @@ import { useLoaderData } from "react-router-dom";
 import { getTheMovie } from "../HomePage/Navbar/Helper";
 import { LoaderData } from "../../Type/loaderType";
 import { useEffect } from "react";
+import { Suspense } from "react";
+import LoadingPage from "../LoadingPage/LoadingPage";
 import Footer from "../HomePage/Footer/Footer";
+export const action = async ({ request }: { request: Request }) => {
+  let formData = await request.formData();
+  let rateValue = formData.get("rateValue");
+};
 export const loader = async ({
   params,
   request,
@@ -42,14 +48,16 @@ function MovieDescription() {
   const data = useLoaderData() as LoaderData<typeof loader>;
   useEffect(() => {}, []);
   return (
-    <div className="  overflow-hidden bg-slate-900">
-      <MovieData
-        data={data.dataJSON}
-        dataImage={data.dataImageJSON}
-        q={data.q ? data.q : ""}
-        movies={data.movies!}
-      />
-      <Footer />
+    <div className="  overflow-hidden overscroll-x-none bg-slate-900">
+      <Suspense fallback={<LoadingPage />}>
+        <MovieData
+          data={data.dataJSON}
+          dataImage={data.dataImageJSON}
+          q={data.q ? data.q : ""}
+          movies={data.movies!}
+        />
+        <Footer />
+      </Suspense>
     </div>
   );
 }

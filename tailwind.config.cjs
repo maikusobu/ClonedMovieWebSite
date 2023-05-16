@@ -15,6 +15,7 @@ module.exports = {
       },
       screens: {
         ipad: "801px",
+        mobile: "496px",
       },
       height: {
         bg: "var(--widthcalculate)",

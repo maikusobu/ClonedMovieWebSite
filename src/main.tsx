@@ -17,6 +17,7 @@ import SearchResults from "./components/SearchResults/SearchResults";
 import { loader as SearchResultsLoader } from "./components/SearchResults/SearchResults";
 import Layout from "./components/HomePage/Layout/Layout";
 import Login from "./components/Authenticate/Login";
+import { action as movieAction } from "../src/components/MovieDetail/MovieData/MovieData";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
     path: "/description/movie/:movieID",
     element: <MovieDescription />,
     loader: MovieDescriptionLoader,
+    action: movieAction,
     errorElement: <ErrorPage />,
   },
   {

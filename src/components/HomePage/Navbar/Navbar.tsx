@@ -64,34 +64,7 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    approved = url.searchParams.get("approved");
-    request_token_response = url.searchParams.get("request_token");
 
-    if (approved === "true" && !isFetch) {
-      isFetch = true;
-      fetch(
-        `https://api.themoviedb.org/3/authentication/session/new?api_key=${
-          import.meta.env.VITE_TMBD_API_KEY
-        }`,
-        {
-          method: "POST",
-          headers: {
-            accept: "application/json",
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({ request_token: request_token_response }),
-        }
-      )
-        .then((json) => json.json())
-        .then((res) => console.log(res))
-        .catch((e) => console.log(e));
-    }
-    return () => {
-      isFetch = true;
-    };
-  }, []);
   useEffect(() => {
     setLocationPrev(location);
   }, [location]);
