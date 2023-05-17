@@ -31,7 +31,7 @@ function TopBillCast({ topCast }: TopBillCastType) {
                 </h1>
                 <div className="w-full">
                   <img
-                    src={`${import.meta.env.VITE_URL_IMAGE}${
+                    src={`${import.meta.env.VITE_URL_IMAGE}original${
                       cast.profile_path
                     }`}
                     width={270}
@@ -46,7 +46,7 @@ function TopBillCast({ topCast }: TopBillCastType) {
                 </div>
               </div>
             ))
-            .slice(0, 10)}
+            .slice(0, 18)}
         </div>
       </div>
     </>

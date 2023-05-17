@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import { MovieType } from "../../../Type/MovieType";
 let movies: MovieType[] = [];
 export function LatestTrailer() {
-  const dispatch = useAppDispatch();
   const data: any = useAppSelector(latestData);
   const status = useAppSelector(latestStatus);
   if (status === "success") movies = data[0].results;
@@ -51,7 +50,7 @@ export function LatestTrailer() {
                     <img
                       className="block h-full rounded-lg"
                       loading="lazy"
-                      src={`${import.meta.env.VITE_URL_IMAGE}${
+                      src={`${import.meta.env.VITE_URL_IMAGE}original${
                         movie.backdrop_path
                       }`}
                       width="300"

@@ -1,10 +1,14 @@
 import Logo from "../HomePage/Navbar/lgo.svg";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { fetchAccount } from "./fetchAccount";
-import Authen from "./useAuthen";
+import { Authen, AuthenGuest } from "./useAuthen";
 import { usePrevLocation } from "../../usePrevLocation/usePrevLocation";
 import { deleteSession } from "./delete";
-import { set } from "date-fns";
+import {
+  getCookie,
+  setCookie,
+  deleteCookie,
+} from "../../Helper/CookieFunction";
 let approved: string | null;
 let request_token_response: string | null;
 type account = {
@@ -14,18 +18,35 @@ type account = {
   success?: boolean;
 };
 let firstSession = false;
+let isGuest = false;
 function Login() {
-  const firstLogin = localStorage.getItem("session_id");
+  const firstLogin = getCookie("session_id");
+  const timer = useRef<number | null>(null);
   const [dataLogin, setDataLogin] = useState<account | null>(
     localStorage.getItem("dataLoginFirst")
       ? JSON.parse(localStorage.getItem("dataLoginFirst")!)
       : null
   );
+  let timeleft: number;
+  if (getCookie("expire") !== undefined) {
+    const vnTime = getCookie("expire")!;
+    const timeNow = new Date();
+    const expirationTime = new Date(vnTime);
+    timeleft = expirationTime.getTime() - timeNow.getTime();
+  } else {
+    timeleft = 0;
+  }
 
   const { locationPath, setLocationPrev } = usePrevLocation();
+  const [timeRemaining, setTimeRemaining] = useState(timeleft);
   const url = new URL(window.location.href);
   approved = url.searchParams.get("approved");
   request_token_response = url.searchParams.get("request_token");
+
+  const seconds = Math.floor((timeRemaining / 1000) % 60);
+  const minutes = Math.floor((timeRemaining / 1000 / 60) % 60);
+  const hours = Math.floor((timeRemaining / (1000 * 60 * 60)) % 24);
+  const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
   const handleLogin = async () => {
     await Authen();
   };
@@ -33,12 +54,31 @@ function Login() {
     await deleteSession();
     setDataLogin(null);
   };
+  const handleLoginGuest = async () => {
+    await AuthenGuest();
+  };
   useEffect(() => {
-    console.log(firstSession, "2");
-    console.log(dataLogin, firstLogin);
+    if (getCookie("expire") !== undefined) {
+      timer.current = setInterval(() => {
+        const vnTime = getCookie("expire")!;
+        const timeNow = new Date();
+        const expirationTime = new Date(vnTime);
+        setTimeRemaining(expirationTime.getTime() - timeNow.getTime());
+        if (expirationTime < timeNow) {
+          handleDelete();
+        }
+      }, 1000);
+    }
+    return () => {
+      clearTimeout(timer.current!);
+    };
+  }, [timeRemaining]);
+  useEffect(() => {
     if (approved === "true" && !firstSession) {
       fetch(
-        `https://api.themoviedb.org/3/authentication/session/new?api_key=${
+        `${
+          import.meta.env.VITE_SITE_API_TMDB
+        }/3/authentication/session/new?api_key=${
           import.meta.env.VITE_TMBD_API_KEY
         }`,
         {
@@ -52,7 +92,7 @@ function Login() {
       )
         .then((json) => json.json())
         .then((res) => {
-          localStorage.setItem("session_id", res.session_id);
+          setCookie("session_id", res.session_id, { secure: true });
 
           fetchAccount(res.session_id).then((res) => {
             setDataLogin(res);
@@ -80,7 +120,9 @@ function Login() {
         {dataLogin?.avatar.tmdb.avatar_path !== null && (
           <div>
             <img
-              src={`https://image.tmdb.org/t/p/w500${dataLogin?.avatar.tmdb.avatar_path}`}
+              src={`${import.meta.env.VITE_URL_IMAGE}w500${
+                dataLogin?.avatar.tmdb.avatar_path
+              }`}
               alt="avatar"
             />
           </div>
@@ -94,7 +136,7 @@ function Login() {
           type="button"
           className=" rounded-lg bg-blue-700 p-3 hover:bg-blue-700/50 lg:text-xl"
         >
-          <a href={`http://localhost:5173${locationPath?.pathname}`}>
+          <a href={`${import.meta.env.VITE_SITE}${locationPath?.pathname}`}>
             Now you can go back
           </a>
         </button>
@@ -102,11 +144,25 @@ function Login() {
           className="rounded-lg bg-rose-700 p-3 hover:bg-rose-700/60 lg:text-xl"
           onClick={handleDelete}
         >
-          Delete session
+          Delete session (logout)
         </button>
-        <button className="rounded-lg bg-amber-500 p-3 text-xl text-black hover:bg-amber-500/50">
+        <button
+          className="rounded-lg bg-amber-500 p-3 text-xl text-black hover:bg-amber-500/50"
+          onClick={() => alert("It is currently fixing")}
+        >
           List movies you rated
         </button>
+        <div>
+          Expired in
+          <span className="text-xl">
+            {" "}
+            {days}
+            {" days"} : {hours}
+            {" hours"} : {minutes}
+            {" minutes"} : {seconds}
+            {" seconds"}
+          </span>
+        </div>
       </div>
     );
   else
@@ -120,7 +176,7 @@ function Login() {
                 className="rounded-md bg-blue-500 p-2 hover:bg-blue-500/50"
                 onClick={handleLogin}
               >
-                Approve session (if you have themoviedb account)
+                Approve session
               </button>
               <span>
                 Join themoviedb
@@ -129,15 +185,9 @@ function Login() {
                   target="_blank"
                   className="pl-3 underline hover:text-stone-500"
                 >
-                  signup
+                  (Signup)
                 </a>
               </span>
-              <button
-                type="button"
-                className="rounded-md bg-blue-500 p-2 hover:bg-blue-500/50"
-              >
-                Approve session(if you want to stay as guest)
-              </button>
             </form>
           </div>
         </div>

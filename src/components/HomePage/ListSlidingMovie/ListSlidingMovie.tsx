@@ -26,8 +26,8 @@ export const ListSlidingMovie: FunctionComponent<{}> = memo(
       return (
         <div
           id="list_content"
-          className="  flex h-3/4 flex-nowrap gap-10 
-      overflow-y-hidden overflow-x-scroll rounded-[10px]  border-[10px] border-[rgb(133,_137,_148)] px-2 pt-4 "
+          className="  flex h-3/4 flex-nowrap gap-4 overflow-y-hidden 
+      overflow-x-scroll rounded-[10px] border-[10px]  border-[rgb(133,_137,_148)] px-4 pt-4 "
         >
           {dummy.map((dummy, i) => (
             <div className="  basis-200 shrink-0 grow-0 " key={i}>
@@ -48,7 +48,7 @@ export const ListSlidingMovie: FunctionComponent<{}> = memo(
         <div
           id="list_content"
           className="  flex h-3/4 flex-nowrap
-      gap-10 overflow-y-hidden overflow-x-scroll rounded-[10px] border border-[10px] border-[rgb(133,_137,_148)] px-3  pt-4 "
+      gap-4 overflow-y-hidden overflow-x-scroll rounded-[10px] border-[10px] border-[rgb(133,_137,_148)] px-4 pt-4 "
         >
           {movies.map((movie) => {
             return (
@@ -57,7 +57,9 @@ export const ListSlidingMovie: FunctionComponent<{}> = memo(
                   <img
                     loading="lazy"
                     className="rounded-lg"
-                    src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                    src={`${import.meta.env.VITE_URL_IMAGE}original${
+                      movie.poster_path
+                    }`}
                     width="200"
                     height="300"
                   />
@@ -73,7 +75,7 @@ export const ListSlidingMovie: FunctionComponent<{}> = memo(
                     `}
                       </div>
                     </div>
-                    <div className="aspect-square h-[35px] w-[35px] self-start rounded-full bg-black p-1">
+                    <div className="aspect-square h-[40px] w-[40px] self-start rounded-full bg-black p-1">
                       <CircularBar vote={movie?.vote_average} />
                     </div>
                   </div>

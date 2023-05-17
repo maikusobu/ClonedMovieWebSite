@@ -6,7 +6,6 @@ import User from "./user.svg";
 import Sort from "./sort.svg";
 import Tool from "./Setting.svg";
 import { Form } from "react-router-dom";
-import Menu from "./menu.svg";
 import { useEffect, useRef, useState } from "react";
 import { useSubmit } from "react-router-dom";
 import { useNavigation, useNavigate } from "react-router-dom";
@@ -17,14 +16,12 @@ import NavBarMobile from "./NavBarMobile/NavBarMobile";
 import { MovieType } from "../../../Type/MovieType";
 import { useLocation } from "react-router-dom";
 import { usePrevLocation } from "../../../usePrevLocation/usePrevLocation";
-let approved: string | null;
-let request_token_response: string | null;
+
 type NavbarProps = {
   movies: MovieType[];
   q: string;
 };
 let lastScrollTop = 0;
-let fixedNav = false;
 
 export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null!);
@@ -32,6 +29,7 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
   const inputFixRef = useRef<HTMLInputElement>(null!);
   const settingRef = useRef<HTMLDivElement>(null!);
   const submit = useSubmit();
+
   const naigation = useNavigation();
   const navigate = useNavigate();
   const [movieDown, setMovieDown] = useState(false);
@@ -66,8 +64,9 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    setLocationPrev(location);
+    if (!location.pathname.includes("/play/movie")) setLocationPrev(location);
   }, [location]);
+
   useEffect(() => {
     inputRef.current.value = q;
     if (inputFixRef.current) {
@@ -77,6 +76,18 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
 
   return (
     <>
+      {/* <button
+        onClick={() => {
+          refLoading.current.continuousStart();
+        }}
+      >
+        Start Continuous Loading Bar
+      </button>
+      <button onClick={() => refLoading.current.staticStart()}>
+        Start Static Loading Bar
+      </button>
+      <button onClick={() => refLoading.current.complete()}>Complete</button>
+      <br /> */}
       <nav
         ref={ref}
         id="navBar"
@@ -120,6 +131,7 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
                       refDiv.current.style.setProperty("width", "50%");
                       setMovieDown(!movieDown);
                       setIsMouse(false);
+                      setIsTyping(false);
                     }
                   }}
                   className="focus:border-primary-600   focus:shadow-te-primary placeholder:text-red-300 dark:text-red-200 
@@ -144,7 +156,10 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
                   }}
                 />
                 <div className=" absolute top-0  right-0 translate-y-[30%] translate-x-[-50%] cursor-pointer transition ease-in-out">
-                  {naigation.state == "loading" && isTyping ? (
+                  {naigation.state == "loading" &&
+                  isTyping &&
+                  q.length > 0 &&
+                  q !== "" ? (
                     <FontAwesomeIcon icon={faSpinner} spinPulse size="xl" />
                   ) : (
                     <FontAwesomeIcon
@@ -162,7 +177,7 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
                   )}
                 </div>
                 {movieDown && inView && (
-                  <ul className=" absolute top-100 w-full space-y-3  bg-gray-600">
+                  <ul className=" absolute top-100 w-full  rounded-xl bg-gray-600">
                     <DropDownMovie
                       movies={movies}
                       q={q}
@@ -287,16 +302,20 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
             </>
           )}
           <div
-            className={`main_navbar  flex-initial pr-4 ${
-              navBar ? `navBar_mobile` : ""
-            }`}
+            className={`main_navbar  flex-initial pr-4 `}
             onClick={(e) => {
               setNavBar(!navBar);
             }}
           >
-            <div className="menu_burger flex items-center justify-end">
-              <div>
-                <img src={Menu}></img>
+            <div className="menu_burger relative z-10 flex items-center justify-end">
+              <div
+                className={`  ${
+                  navBar ? "rotate_burger" : ""
+                }  flex flex-col gap-2 `}
+              >
+                <span className="  block h-[3px] w-[35px] bg-gradient-to-r from-red  to-purple transition-all duration-300"></span>
+                <span className=" block h-[3px] w-[35px]  bg-gradient-to-r from-red to-purple transition-all duration-300 "></span>
+                <span className=" block h-[3px] w-[35px]  bg-gradient-to-r from-red to-purple transition-all duration-300"></span>
               </div>
             </div>
           </div>

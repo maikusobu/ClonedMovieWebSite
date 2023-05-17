@@ -13,7 +13,6 @@ import {
   selectRecommend,
   selectRecommendStatus,
 } from "../../HomePage/SliceApi/SliceRecommend";
-import { set } from "date-fns";
 
 function Recommendation({ id }: { id: number }) {
   const dispatch = useAppDispatch();
@@ -54,8 +53,7 @@ function Recommendation({ id }: { id: number }) {
     dispatch(fetchRecommend({ id: id }));
   }, [id]);
   useEffect(() => {
-    flushSync(() => setScrollState(0));
-    handleScrollArrow();
+    setScrollState(0);
   }, [location]);
 
   if (status == "pending")
@@ -106,18 +104,25 @@ function Recommendation({ id }: { id: number }) {
               >
                 <Link to={`/description/movie/${item.id}`}>
                   <div>
-                    <img
-                      src={`${
-                        item.backdrop_path
-                          ? `${import.meta.env.VITE_URL_IMAGE}${
-                              item.backdrop_path
-                            }`
-                          : `${null}`
-                      }  `}
-                      alt=""
-                      width={300}
-                      className=" block w-full  rounded-lg hover:scale-[1.08]"
-                    />
+                    {item.backdrop_path && (
+                      <img
+                        src={`${`${import.meta.env.VITE_URL_IMAGE}original${
+                          item.backdrop_path
+                        }`}  `}
+                        alt=""
+                        width={300}
+                        className=" block w-full  rounded-lg hover:scale-[1.08]"
+                      />
+                    )}
+                    {!item.backdrop_path && (
+                      <img
+                        src={`${NotFound}`}
+                        width={300}
+                        height={70}
+                        className=" black w-full rounded-lg object-cover hover:scale-[1.08]"
+                        alt="notfound"
+                      ></img>
+                    )}
                   </div>
                 </Link>
                 <div className="">

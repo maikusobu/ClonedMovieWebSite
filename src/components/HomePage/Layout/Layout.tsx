@@ -1,5 +1,5 @@
-import { Navigate, Outlet } from "react-router-dom";
-import "./Layout.css";
+import { Outlet } from "react-router-dom";
+
 import { useRef, useState, useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
 import { createPortal } from "react-dom";
@@ -12,7 +12,6 @@ import { getTheMovie } from "../Navbar/Helper";
 import { getLatestMovie } from "../SliceApi/SliceApiLatest";
 import { LoaderData } from "../../../Type/loaderType";
 import { ScrollRestoration } from "react-router-dom";
-
 import { latestStatus } from "../SliceApi/SliceApiLatest";
 import LoadingAnimationPage from "../LoadingAnimationPage/LoadingAnimationPage";
 import Footer from "../Footer/Footer";
@@ -28,11 +27,10 @@ export async function loader({ request }: { request: Request }) {
   const movies = await getTheMovie(q);
   return { movies, q };
 }
-
 const Layout = (): JSX.Element => {
   const { movies, q } = useLoaderData() as LoaderData<typeof loader>;
   const [scrollPos, setScrollPos] = useState(
-    Number(localStorage.getItem("scroll"))
+    Number(sessionStorage.getItem("scrollPos")) || 0
   );
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +39,7 @@ const Layout = (): JSX.Element => {
 
   const fetchData = async () => {
     const data = await fetch(
-      `https://api.themoviedb.org/3/movie/now_playing?api_key=${
+      `${import.meta.env.VITE_SITE_API_TMDB}/3/movie/now_playing?api_key=${
         import.meta.env.VITE_TMBD_API_KEY
       }&language=en-US&page=1`
     );
@@ -49,6 +47,7 @@ const Layout = (): JSX.Element => {
     setIsLoading(false);
     setDataToprated(dataJSON.results);
   };
+
   useEffect(() => {
     setIsLoading(true);
     fetchData();
@@ -78,7 +77,7 @@ const Layout = (): JSX.Element => {
           onScroll={(e) => {
             e.preventDefault();
             setScrollPos(e.currentTarget.scrollTop);
-            localStorage.setItem("scroll", String(scrollPos));
+            sessionStorage.setItem("scroll", String(scrollPos));
           }}
         >
           {createPortal(
@@ -104,7 +103,9 @@ const Layout = (): JSX.Element => {
         </div>
         <ScrollRestoration
           getKey={(location, matches) => {
-            return location.pathname;
+            const paths = ["/description/movie"];
+            if (paths.includes(location.pathname)) return location.key; // restore  by browser;
+            return location.pathname; // restore by last route enter;
           }}
         />
       </>

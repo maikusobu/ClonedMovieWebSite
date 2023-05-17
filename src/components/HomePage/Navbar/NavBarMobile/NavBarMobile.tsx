@@ -28,21 +28,10 @@ function NavBarMobile({
 
   return (
     <div
-      className={`main_navbar disp absolute top-0  h-[100vh] w-[100%] bg-slate-600 transition-all delay-300 ${
+      className={`main_navbar disp absolute top-0 h-[100vh] w-[100%] bg-slate-900 pt-20 transition-all delay-300 ${
         navBar ? "right-0" : "right-[-100%]"
       }`}
     >
-      <div>
-        <FontAwesomeIcon
-          icon={faXmark}
-          size="2xl"
-          style={{ color: "#e7e8e9" }}
-          onClick={(e) => {
-            setNavBar(!navBar);
-          }}
-          className={`${!navBar ? "navBar_mobile" : ""}`}
-        />
-      </div>
       <div
         className={`flex flex-col items-center justify-center gap-5 pt-2   `}
       >
@@ -112,7 +101,7 @@ function NavBarMobile({
             </div>
           </Form>
         )}
-        <div>
+        <div onClick={() => navigate("/login")}>
           <FontAwesomeIcon
             icon={faUser}
             size="2xl"

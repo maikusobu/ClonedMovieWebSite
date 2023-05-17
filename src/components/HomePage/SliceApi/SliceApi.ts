@@ -5,7 +5,6 @@ import { RootState } from "../../../App/store";
 import { movieidType } from "../../SearchFilter/SearchFilterContainer";
 const apikey = import.meta.env.VITE_TMBD_API_KEY;
 
-
 type SliceApiProp = {
   data: MovieType[];
   status: string;
@@ -18,7 +17,9 @@ type SliceApiProp = {
 
 export const getGenre = createAsyncThunk("genre/getGenre", async () => {
   const getDB = await fetch(
-    `https://api.themoviedb.org/3/genre/movie/list?api_key=${apikey}&language=en-US`
+    `${
+      import.meta.env.VITE_SITE_API_TMDB
+    }/3/genre/movie/list?api_key=${apikey}&language=en-US`
   );
   const getJson = getDB.json();
   return getJson;
@@ -27,7 +28,9 @@ export const getListGenre = createAsyncThunk(
   "genre/getListGenre",
   async ({ id, page }: { id: number; page: number }, thunkAPI) => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${apikey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=${page}&with_watch_monetization_types=flatrate&with_genres=${id}`
+      `${
+        import.meta.env.VITE_SITE_API_TMDB
+      }/3/discover/movie?api_key=${apikey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=${page}&with_watch_monetization_types=flatrate&with_genres=${id}`
     );
     return response.json();
   }
@@ -37,7 +40,9 @@ export const getPopularMovie = createAsyncThunk(
   "genre/getPopularMovie",
   async ({ page, sort, id, min, max }: movieidType, thunkAPI) => {
     const getDB = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${apikey}&language=en-US&sort_by=${sort}&include_adult=false&include_video=true&page=${page}&vote_average.gte=${Number(
+      `${
+        import.meta.env.VITE_SITE_API_TMDB
+      }/3/discover/movie?api_key=${apikey}&language=en-US&sort_by=${sort}&include_adult=false&include_video=true&page=${page}&vote_average.gte=${Number(
         min / 10
       )}&vote_average.lte=${Number(
         max / 10

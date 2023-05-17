@@ -27,7 +27,9 @@ function Production({ array }: { array: productionCompanies[] }) {
               <div className="absolute left-0 top-0 z-10 hidden translate-x-[-100%]  group-hover:block  group-hover:bg-white">
                 <img
                   className="h-1/3"
-                  src={`${import.meta.env.VITE_URL_IMAGE}${company.logo_path}`}
+                  src={`${import.meta.env.VITE_URL_IMAGE}original${
+                    company.logo_path
+                  }`}
                 />{" "}
               </div>
             </div>

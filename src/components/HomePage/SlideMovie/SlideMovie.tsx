@@ -37,6 +37,7 @@ export function SlideMovive() {
           className=" chose_button h-1/6 items-center  px-10  text-white "
           onClick={(e) => {
             e.preventDefault();
+
             dispatch(toggleTrending(!toggleStateData));
           }}
         >

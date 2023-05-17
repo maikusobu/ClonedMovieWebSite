@@ -7,7 +7,9 @@ export const getTrendingMovie = createAsyncThunk(
   "trend/getTrendingMovie",
   async (time: string) => {
     const getDB = await fetch(`
-  https://api.themoviedb.org/3/trending/movie/${time}?api_key=${apikey}`);
+ ${
+   import.meta.env.VITE_SITE_API_TMDB
+ }/3/trending/movie/${time}?api_key=${apikey}`);
     return getDB.json();
   }
 );

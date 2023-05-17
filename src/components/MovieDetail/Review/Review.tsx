@@ -1,8 +1,7 @@
 import { ReviewData } from "../../HomePage/SliceApi/SliceReview";
-import { extractUrl } from "../../../Helper/ExtractUrl";
+import { isBeginWithHTTPS } from "../../../Helper/isBeginWithHTTPS";
 import { useRef, useEffect, useState } from "react";
-import useScreen from "../../useScreen/useScreen";
-import { set } from "date-fns";
+
 export type Props = {
   reviewData: ReviewData[];
 };
@@ -99,9 +98,9 @@ function Review({ reviewData }: { reviewData: ReviewData[] }) {
                     <img
                       onMouseOver={() => handleMouseOverPage(data.id)}
                       src={` ${
-                        extractUrl(data.author_details.avatar_path)
+                        isBeginWithHTTPS(data.author_details.avatar_path)
                           ? data.author_details.avatar_path.substring(1)
-                          : `${import.meta.env.VITE_URL_IMAGE}${
+                          : `${import.meta.env.VITE_URL_IMAGE}original${
                               data.author_details.avatar_path
                             }`
                       }   `}

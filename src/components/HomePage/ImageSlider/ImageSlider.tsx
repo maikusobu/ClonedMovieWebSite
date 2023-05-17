@@ -65,7 +65,7 @@ export function ImageSlider({ dataToprated, isLoading }: ImageSliderType) {
               <img
                 key={dataToprated[index]?.title}
                 className="media_img_width aspect-[3/4] rounded-md shadow-lg"
-                src={`${import.meta.env.VITE_URL_IMAGE}${
+                src={`${import.meta.env.VITE_URL_IMAGE}original${
                   dataToprated[index]?.poster_path
                 }`}
                 width="250"

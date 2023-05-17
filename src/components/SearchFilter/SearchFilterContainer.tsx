@@ -5,6 +5,7 @@ import { Navbar } from "../HomePage/Navbar/Navbar";
 import { useLoaderData } from "react-router-dom";
 import { LoaderData } from "../../Type/loaderType";
 import { loader } from "../HomePage/Layout/Layout";
+import LoadingBarTop from "../LoadingBarTop/LoadingBarTop";
 export type movieidType = {
   id: number[];
   page: number;
@@ -26,6 +27,7 @@ function SearchFilterContainer() {
   // Dùng để chứa search và filter
   return (
     <>
+      <LoadingBarTop />
       <div
         className=" absolute z-[-50]  h-auto min-h-full w-full bg-slate-900"
         id="child"

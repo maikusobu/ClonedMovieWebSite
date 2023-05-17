@@ -1,13 +1,10 @@
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { useRef } from "react";
-import { getTrailer } from "../SliceApi/SliceApiLatest";
 import { useLoaderData } from "react-router-dom";
 import { FaAsterisk } from "react-icons/fa";
-import { useNavigation } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { LoaderData } from "../../../Type/loaderType";
 import { useNavigate } from "react-router-dom";
+import { usePrevLocation } from "../../../usePrevLocation/usePrevLocation";
+import useScreen from "../../useScreen/useScreen";
 export async function loader({ params }: { params: any }) {
   const data = await fetch(`
   https://api.themoviedb.org/3/movie/${params.movieID}/videos?api_key=${
@@ -18,15 +15,17 @@ export async function loader({ params }: { params: any }) {
 
 export function VideoPlay() {
   const navigate = useNavigate();
-  const navigation = useNavigation();
+  const { locationPath, setLocationPrev } = usePrevLocation();
+  const { width, height } = useScreen();
   const data = useLoaderData() as LoaderData<typeof loader>;
 
   return (
     <div id="video_popup" className=" aspect-video">
       <button
         type="button"
-        onClick={() => {
-          navigate("/");
+        onClick={(e) => {
+          e.currentTarget.classList.add("navBar_mobile");
+          navigate(`${locationPath?.pathname}`);
         }}
       >
         <IconContext.Provider
@@ -41,10 +40,12 @@ export function VideoPlay() {
           height="500"
           src={`https://www.youtube.com/embed/${data.results[1]?.key}`}
           title="Video clip"
-          className=" mx-auto h-[50%] w-[80%] border-8 md:h-[80%]"
+          className={`${
+            width < 500 ? " aspect-video w-[100%]" : "h-[50%] w-[80%]"
+          } mx-auto  border-8 md:h-[80%]`}
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
-          allowFullScreen={false}
+          allowFullScreen={true}
         ></iframe>
       </div>
     </div>

@@ -11,7 +11,7 @@ export const getReview = createAsyncThunk(
   "review/getReview",
   async ({ id, page = 1 }: { id: number; page?: number }, thunkAPI) => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${
+      `${import.meta.env.VITE_SITE_API_TMDB}/3/movie/${id}/reviews?api_key=${
         import.meta.env.VITE_TMBD_API_KEY
       }&language=en-US&page=${page}`,
       options

@@ -21,7 +21,9 @@ export const getLatestMovie = createAsyncThunk(
   async () => {
     const data = await fetch(
       `
-      https://api.themoviedb.org/3/movie/upcoming?api_key=${apikey}&language=en-US&page=1`
+      ${
+        import.meta.env.VITE_SITE_API_TMDB
+      }/3/movie/upcoming?api_key=${apikey}&language=en-US&page=1`
     );
     return data.json();
   }
@@ -40,7 +42,9 @@ export const getTrailer = createAsyncThunk(
   "latest/getTrailer",
   async (movie_id) => {
     const data = await fetch(`
-  https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${apikey}&language=en-US`);
+  ${
+    import.meta.env.VITE_SITE_API_TMDB
+  }/3/movie/${movie_id}/videos?api_key=${apikey}&language=en-US`);
     return data.json();
   }
 );

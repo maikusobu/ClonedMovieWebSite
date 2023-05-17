@@ -1,10 +1,11 @@
 import { Props } from "./Review";
-import { extractUrl } from "../../../Helper/ExtractUrl";
+import { isBeginWithHTTPS } from "../../../Helper/isBeginWithHTTPS";
 import { useState } from "react";
 import { createPortal } from "react-dom";
-import { set } from "date-fns";
+import useScreen from "../../useScreen/useScreen";
 function ReviewTabletandMobile({ reviewData }: Props) {
   const [pageNumber, setPageNUmber] = useState<number | null>(null);
+  const { width, height } = useScreen();
   const handleSet = (id: number) => {
     if (pageNumber === id) {
       setPageNUmber(null);
@@ -15,7 +16,9 @@ function ReviewTabletandMobile({ reviewData }: Props) {
   return (
     <div
       id="reviewContainer"
-      className={`grid w-[90%]  grid-cols-[repeat(auto_fill,minmax(0,1fr))] flex-nowrap gap-6 bg-transparent  text-white`}
+      className={`grid ${
+        width > 770 ? "w-[90%]" : "w-[100%]"
+      }  grid-cols-[repeat(auto_fill,minmax(0,1fr))] flex-nowrap gap-6 bg-transparent  text-white`}
     >
       {reviewData
         .map((data, i) => (
@@ -33,7 +36,7 @@ function ReviewTabletandMobile({ reviewData }: Props) {
                   >
                     <img
                       src={` ${
-                        extractUrl(data.author_details.avatar_path)
+                        isBeginWithHTTPS(data.author_details.avatar_path)
                           ? data.author_details.avatar_path.substring(1)
                           : `${import.meta.env.VITE_URL_IMAGE}${
                               data.author_details.avatar_path

@@ -15,7 +15,9 @@ const fetchRecommend = createAsyncThunk(
   "recommend/fetchRecommend",
   async ({ id }: { id: number }, thunkAPI) => {
     const data = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${
+      `${
+        import.meta.env.VITE_SITE_API_TMDB
+      }/3/movie/${id}/recommendations?api_key=${
         import.meta.env.VITE_TMBD_API_KEY
       }`
     );

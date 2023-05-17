@@ -48,7 +48,7 @@ function ErrorPage() {
 
           <p className="mt-4 text-gray-500">We can't find that page.</p>
           {<p className="mt-4 text-gray-500">{er}</p>}
-          <p>Please wait!! the dev of website is fixing</p>
+          <p>Please wait!! currently fixing</p>
         </div>
       </div>
     );

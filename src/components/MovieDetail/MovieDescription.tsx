@@ -6,12 +6,9 @@ import { getTheMovie } from "../HomePage/Navbar/Helper";
 import { LoaderData } from "../../Type/loaderType";
 import { useEffect } from "react";
 import { Suspense } from "react";
-import LoadingPage from "../LoadingPage/LoadingPage";
+import LoadingAnimationPage from "../HomePage/LoadingAnimationPage/LoadingAnimationPage";
 import Footer from "../HomePage/Footer/Footer";
-export const action = async ({ request }: { request: Request }) => {
-  let formData = await request.formData();
-  let rateValue = formData.get("rateValue");
-};
+
 export const loader = async ({
   params,
   request,
@@ -20,7 +17,7 @@ export const loader = async ({
   request: any;
 }) => {
   const data = await fetch(
-    `https://api.themoviedb.org/3/movie/${params.movieID}?api_key=${
+    `${import.meta.env.VITE_SITE_API_TMDB}/3/movie/${params.movieID}?api_key=${
       import.meta.env.VITE_TMBD_API_KEY
     }&language=en-US`,
     {
@@ -29,9 +26,9 @@ export const loader = async ({
     }
   );
   const dataImage = await fetch(
-    `https://api.themoviedb.org/3/movie/${params.movieID}/credits?api_key=${
-      import.meta.env.VITE_TMBD_API_KEY
-    }&language=en-US`,
+    `${import.meta.env.VITE_SITE_API_TMDB}/3/movie/${
+      params.movieID
+    }/credits?api_key=${import.meta.env.VITE_TMBD_API_KEY}&language=en-US`,
     {
       method: "GET",
       credentials: "omit",
@@ -49,7 +46,7 @@ function MovieDescription() {
   useEffect(() => {}, []);
   return (
     <div className="  overflow-hidden overscroll-x-none bg-slate-900">
-      <Suspense fallback={<LoadingPage />}>
+      <Suspense fallback={<LoadingAnimationPage />}>
         <MovieData
           data={data.dataJSON}
           dataImage={data.dataImageJSON}
