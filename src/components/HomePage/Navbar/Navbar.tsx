@@ -16,7 +16,6 @@ import NavBarMobile from "./NavBarMobile/NavBarMobile";
 import { MovieType } from "../../../Type/MovieType";
 import { useLocation } from "react-router-dom";
 import { usePrevLocation } from "../../../usePrevLocation/usePrevLocation";
-
 type NavbarProps = {
   movies: MovieType[];
   q: string;
@@ -76,18 +75,6 @@ export const Navbar = ({ movies, q }: NavbarProps): JSX.Element => {
 
   return (
     <>
-      {/* <button
-        onClick={() => {
-          refLoading.current.continuousStart();
-        }}
-      >
-        Start Continuous Loading Bar
-      </button>
-      <button onClick={() => refLoading.current.staticStart()}>
-        Start Static Loading Bar
-      </button>
-      <button onClick={() => refLoading.current.complete()}>Complete</button>
-      <br /> */}
       <nav
         ref={ref}
         id="navBar"
