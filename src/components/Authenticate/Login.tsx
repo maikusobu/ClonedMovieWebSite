@@ -146,12 +146,6 @@ function Login() {
         >
           Delete session (logout)
         </button>
-        <button
-          className="rounded-lg bg-amber-500 p-3 text-xl text-black hover:bg-amber-500/50"
-          onClick={() => alert("It is currently fixing")}
-        >
-          List movies you rated
-        </button>
         <div>
           Expired in
           <span className="text-xl">
