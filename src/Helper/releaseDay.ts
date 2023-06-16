@@ -1,6 +1,6 @@
 import { toDate } from "date-fns";
 import { MovieType } from "../Type/MovieType";
-export function useReleaseDay(movie: MovieType) {
+export function releaseDay(movie: MovieType) {
   const dataDate = [
     ...toDate(
       new Date(

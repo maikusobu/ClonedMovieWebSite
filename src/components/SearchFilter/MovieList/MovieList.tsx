@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../../App/hooks";
 import { useEffect, useState } from "react";
 import Movie from "./Movie";
 import { movieidType } from "../SearchFilterContainer";
-import { useReleaseDay } from "../../../useReleaseDay/useReleaseDay";
+import { releaseDay } from "../../../Helper/releaseDay";
 type MovieList = {
   movieId: movieidType;
   setMovieId: (movieId: movieidType) => void;
@@ -36,7 +36,7 @@ function MovieList({ movieId, setMovieId }: MovieList) {
             isLast={i === results.length - 1}
             key={result.id}
             id={result.id}
-            release={result.release_date ? useReleaseDay(result) : ""}
+            release={result.release_date ? releaseDay(result) : ""}
             title={result.title}
             poster={result.poster_path}
             overview={result.overview}

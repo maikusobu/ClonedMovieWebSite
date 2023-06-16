@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useReleaseDay } from "../../../useReleaseDay/useReleaseDay";
+import { releaseDay } from "../../../Helper/releaseDay";
 import { MovieType } from "../../../Type/MovieType";
 import { useNavigate } from "react-router-dom";
 type DropDownMovieProps = {
@@ -50,7 +50,7 @@ function DropDownMovie({
                       {movie.title}
                     </h4>
                     <p className="block text-ellipsis text-base text-white ">
-                      {useReleaseDay(movie)}
+                      {releaseDay(movie)}
                     </p>
                   </div>
                 </Link>

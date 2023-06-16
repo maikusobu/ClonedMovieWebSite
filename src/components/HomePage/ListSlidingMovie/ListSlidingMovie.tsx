@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { getTrendingMovie } from "../SliceApi/SliceApiTrending";
 import { MovieType } from "../../../Type/MovieType";
 import { memo } from "react";
-import { useReleaseDay } from "../../../useReleaseDay/useReleaseDay";
+import { releaseDay } from "../../../Helper/releaseDay";
 import CircularBar from "../../CirculaBar/CircularBar";
 let movies: MovieType[] = [];
 const dummy = new Array(20).fill(undefined);
@@ -71,7 +71,7 @@ export const ListSlidingMovie: FunctionComponent<{}> = memo(
                         {movie.title}
                       </h1>
                       <div className="text-white">
-                        {`${useReleaseDay(movie)} 
+                        {`${releaseDay(movie)} 
                     `}
                       </div>
                     </div>

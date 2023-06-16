@@ -29,7 +29,6 @@ export function setCookie(name: string, value: string, options: optionsType) {
 
   let updatedCookie =
     encodeURIComponent(name) + "=" + encodeURIComponent(value);
-
   for (let optionKey in options) {
     updatedCookie += "; " + optionKey;
     let optionValue = options[optionKey];

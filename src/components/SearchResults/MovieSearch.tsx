@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { MovieType } from "../../Type/MovieType";
 import CircularBar from "../CirculaBar/CircularBar";
-
-import { useReleaseDay } from "../../useReleaseDay/useReleaseDay";
+import { releaseDay } from "../../Helper/releaseDay";
 function MovieSearch({ movie }: { movie: MovieType }) {
   return (
     <div
@@ -34,7 +33,7 @@ function MovieSearch({ movie }: { movie: MovieType }) {
             <p>{movie.overview} </p>
           </div>
           <div id="release_day " className="hidden md:block">
-            {useReleaseDay(movie)}
+            {releaseDay(movie)}
           </div>
         </div>
       </Link>

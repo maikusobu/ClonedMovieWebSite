@@ -4,9 +4,9 @@ import { Navbar } from "../../HomePage/Navbar/Navbar";
 import useScreen from "../../useScreen/useScreen";
 import TopBillCast from "../TopBillCast/TopBillCast";
 import { MovieType } from "../../../Type/MovieType";
-import { useReleaseDay } from "../../../useReleaseDay/useReleaseDay";
+import { releaseDay } from "../../../Helper/releaseDay";
 import { Suspense } from "react";
-import { Form } from "react-router-dom";
+
 import CircularBar from "../../CirculaBar/CircularBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPen } from "@fortawesome/free-solid-svg-icons";
@@ -182,7 +182,7 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
               </div>
               <div className="flex flex-col items-center ">
                 <div className=" font-medium text-inherit">
-                  {useReleaseDay(data)}
+                  {releaseDay(data)}
                 </div>
                 <div className=" my-2 grid w-full  grid-cols-[repeat(auto-fill,minmax(80px,1fr))] items-center justify-center gap-2 font-mono">
                   {data.genres.map((genre) => (
@@ -304,7 +304,7 @@ function MovieData({ data, dataImage, q, movies }: MovieDataType) {
                           <CircularBar vote={data?.vote_average} />
                         </div>
                         <div className="  font-medium text-inherit">
-                          <div>{useReleaseDay(data)}</div>
+                          <div>{releaseDay(data)}</div>
                           <div className=" cursor-pointer space-x-2">
                             <FontAwesomeIcon icon={faPlay} className="" />
                             <span

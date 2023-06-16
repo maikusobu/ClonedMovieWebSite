@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { useReleaseDay } from "../../../useReleaseDay/useReleaseDay";
+import { releaseDay } from "../../../Helper/releaseDay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MovieType } from "../../../Type/MovieType";
 type ImageSliderType = {
@@ -44,7 +44,7 @@ export function ImageSlider({ dataToprated, isLoading }: ImageSliderType) {
 
   if (!isLoading) {
     const movie = dataToprated[index];
-    dataDate = useReleaseDay(movie);
+    dataDate = releaseDay(movie);
   }
   if (isLoading) return <h1 className="text-white">Loading</h1>;
   else
